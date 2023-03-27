@@ -1,14 +1,16 @@
 # Escopo do Sistema
 ## Objetivo
-#### O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens
+O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 ## Principais Features
-#### - Página de Login
-#### - Feed de Imagens adicionadas por pessoas as quais o usuário se conectou
-#### - Sistema para postagem de imagens próprias do usuário
+- Página de Login
+- Feed de Imagens adicionadas por pessoas às quais o usuário se conectou ou imagens que se encaixam em uma categoria escolhida
+- Sistema para postagem de imagens próprias do usuário
 # Membros da Equipe
-#### - Gabriel Teixeira - Full Stack
-#### - Gabriel Lima Barros - Backend Dev
+- Gabriel Lima Barros - Backend Dev
+- Gabriel Teixeira Carvalho - Full Stack
 # Tecnologias
-#### - ReactJs
-#### - NodeJs
+- NodeJs
+- TypeScript
+- ReactJs
+- SQLite
 
