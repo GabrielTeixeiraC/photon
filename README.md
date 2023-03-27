@@ -5,7 +5,10 @@
 #### - Página de Login
 #### - Feed de Imagens adicionadas por pessoas as quais o usuário se conectou
 #### - Sistema para postagem de imagens próprias do usuário
-## Tecnologias
+# Membros da Equipe
+#### - Gabriel Teixeira - Full Stack
+#### - Gabriel Lima Barros - Backend Dev
+# Tecnologias
 #### - ReactJs
 #### - NodeJs
 
