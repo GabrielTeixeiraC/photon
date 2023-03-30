@@ -1,14 +1,18 @@
 import { PrismaClient } from '@prisma/client'
+import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient()
 
-const firstUserId = '0730ffac-d039-4194-9571-01aa2aa0efbd'
 
-const secondUserId = '00880d75-a933-4fef-94ab-e05744435297'
 
 async function run() {
   await prisma.user.deleteMany();
+  
+  const firstUserId = '0730ffac-d039-4194-9571-01aa2aa0efbd';
+  const secondUserId = '00880d75-a933-4fef-94ab-e05744435297';
 
+  const firstPassword = await hash('123Seguro&', 10);
+  const secondPassword = await hash('123Seguro&', 10);
   /**
    * Create user
    */
@@ -18,7 +22,7 @@ async function run() {
         id: firstUserId,
         name: 'Gabriel Lima Barros',
         email: 'lima@gmail.com',
-        password: '123Seguro&',
+        password: firstPassword,
       }
     }),
 
@@ -27,7 +31,7 @@ async function run() {
         id: secondUserId,
         name: 'Gabriel Teixeira Carvalho',
         email: 'teixeira@gmail.com',
-        password: '123Seguro&',
+        password: secondPassword,
       }
     })
   ]);
