@@ -1,4 +1,5 @@
-import LoginPage from './components/LoginPage'
+import Login from './components/Login/Login'
+import SignUp from './components/SignUp/SignUp';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 
@@ -21,8 +22,8 @@ function App() {
               </>
             }
           />
-          <Route path="/signup" element={<></>} />
-          <Route index element={<LoginPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route index element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>
