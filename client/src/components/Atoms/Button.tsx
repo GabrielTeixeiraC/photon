@@ -1,7 +1,6 @@
 import MUIButton from '@mui/material/Button';
 
 interface ButtonProps {
-  handleSubmit: () => void;
   loading?: boolean;
   buttonText: string;
 }
@@ -14,9 +13,9 @@ const buttonStyle = {
   fontWeight: 'bold'
 };
 
-export function Button({handleSubmit, loading, buttonText} : ButtonProps) {
+export function Button({ loading, buttonText} : ButtonProps) {
   return(
     <div className="login-button">
-      <MUIButton variant="outlined" onClick={handleSubmit} disabled={loading} sx={buttonStyle}>{!loading ? buttonText : 'Carregando...' }</MUIButton>
+      <MUIButton type='submit' variant="outlined" disabled={loading} sx={buttonStyle}>{!loading ? buttonText : 'Carregando...' }</MUIButton>
     </div>
 )};

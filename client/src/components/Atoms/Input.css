@@ -18,3 +18,8 @@
 .input-icon{
   display: flex;
 }
+
+.input-text:focus{
+  transition: 0.75s;
+  border-bottom: 1px solid #7680d8;
+} 

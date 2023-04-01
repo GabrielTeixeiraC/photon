@@ -17,9 +17,11 @@ export default function SignUp() {
   
   const navigate = useNavigate();
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setLoading(true);
     setError('');
+    console.log(name, email, password, confirmPassword);    
 
     if (password !== confirmPassword) {
       setError('Senhas não conferem');
@@ -36,6 +38,7 @@ export default function SignUp() {
     await signup(name, email, password).catch((err) => {
       setError(err);
       setLoading(false);
+      throw err;
     }).then(() => {
       navigate('/');
     });
@@ -45,12 +48,12 @@ export default function SignUp() {
     <div className="login-wrapper">
       <h1>photon</h1>
       <h2>Fotos para todos.</h2>
-      <form>
-        <Input type="text" placeholder="Nome" setValue={setName} value={name} Icon={AccountCircleOutlinedIcon} />
-        <Input type="text" placeholder="Email" setValue={setEmail} value={email} Icon={EmailOutlinedIcon} />
-        <Input type="password" placeholder="Senha" setValue={setPassword} value={password} Icon={HttpsOutlinedIcon} />
-        <Input type="password" placeholder="Confirmar senha" setValue={setConfirmPassword} value={confirmPassword} Icon={HttpsOutlinedIcon} />
-        <Button handleSubmit={handleSubmit} loading={loading} buttonText='Cadastrar'/>
+      <form onSubmit={handleSubmit}>
+        <Input type="text" placeholder="Nome" loading={loading} setValue={setName} value={name} Icon={AccountCircleOutlinedIcon} />
+        <Input type="text" placeholder="Email" loading={loading} setValue={setEmail} value={email} Icon={EmailOutlinedIcon} />
+        <Input type="password" placeholder="Senha" loading={loading} setValue={setPassword} value={password} Icon={HttpsOutlinedIcon} />
+        <Input type="password" placeholder="Confirmar senha" loading={loading} setValue={setConfirmPassword} value={confirmPassword} Icon={HttpsOutlinedIcon} />
+        <Button loading={loading} buttonText='Cadastrar'/>
       </form>
       {error ? <Error error={error} /> : null}  
       <h4>JÁ TEM UMA CONTA? <Link to='/'>ENTRAR</Link></h4>
