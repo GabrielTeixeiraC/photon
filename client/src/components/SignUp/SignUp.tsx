@@ -5,7 +5,7 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import { useState } from 'react';
 import { Error, Input, Button } from '../Atoms';
 import { signup } from '../../services/authenticate';
-import './SignUp.css';
+import '../Form.css';
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -21,7 +21,6 @@ export default function SignUp() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    console.log(name, email, password, confirmPassword);    
 
     if (password !== confirmPassword) {
       setError('Senhas não conferem');
@@ -45,7 +44,7 @@ export default function SignUp() {
   }
 
   return(
-    <div className="login-wrapper">
+    <div className="form-wrapper">
       <h1>photon</h1>
       <h2>Fotos para todos.</h2>
       <form onSubmit={handleSubmit}>

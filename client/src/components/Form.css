@@ -1,4 +1,4 @@
-.login-wrapper{
+.form-wrapper{
   display: flex;
   flex-direction: column;
   width: 30%;
@@ -10,30 +10,30 @@
   padding: 2em 0;
 }
 
-.login-wrapper h1{
+.form-wrapper h1{
   margin-bottom: 0.5em;
 }
 
-.login-wrapper h2{
+.form-wrapper h2{
   margin-bottom: 1em;
 }
 
 
-.login-wrapper h4{
-  margin-top: 1.5em;
+.form-wrapper h4{
+  margin: 0.5em;
 }
 
-.login-button{
-  margin-top: 0.5em;
+.form-button{
+  margin: 0.5em 0 0.5em 0;
 }
 
-.login-wrapper a{
+.form-wrapper a{
   color: #213547;
   font-weight: bold;
   text-decoration: underline;
 }
 
-.login-wrapper a:hover{
+.form-wrapper a:hover{
   transition: 0.1s;
   color: #97a0a8;
 }

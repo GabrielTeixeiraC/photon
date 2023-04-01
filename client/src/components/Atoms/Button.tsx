@@ -15,7 +15,7 @@ const buttonStyle = {
 
 export function Button({ loading, buttonText} : ButtonProps) {
   return(
-    <div className="login-button">
+    <div className="form-button">
       <MUIButton type='submit' variant="outlined" disabled={loading} sx={buttonStyle}>{!loading ? buttonText : 'Carregando...' }</MUIButton>
     </div>
 )};
