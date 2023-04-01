@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import cors, { CorsOptions } from 'cors';
 import cookieParser from 'cookie-parser';
 import { getEnv } from '../utils/functions/get-env';
+import { errorHandler } from '../src/middlewares/error-handler';
 
 dotenv.config();
 export const app: Express = express();
@@ -23,3 +24,5 @@ app.use(express.json());
 
 import { router as usersRouter } from '../src/domains/users/controllers/index';
 app.use('/api/users', usersRouter);
+
+app.use(errorHandler);

@@ -3,8 +3,6 @@ import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient()
 
-
-
 async function run() {
   await prisma.user.deleteMany();
   
