@@ -40,6 +40,28 @@ class UserServiceClass {
     return newUser;
   }
 
+  async findById(id: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        followers_count: true,
+        following_count: true,
+        likes_count: true,
+        created_at: true,
+      },
+    });
+
+    if (!user) {
+      throw new QueryError('User not found');
+    }
+
+    return user;
+  }
 }
 
 export const UserService = new UserServiceClass();

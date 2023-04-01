@@ -17,6 +17,7 @@ model User {
   email           String   @unique
   password        String
   followers_count Int      @default(0)
+  following_count Int      @default(0)
   likes_count     Int      @default(0)
   created_at      DateTime @default(now())
 
