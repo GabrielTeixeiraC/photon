@@ -30,7 +30,7 @@ export default function Login() {
       setLoading(false);
       throw err;
     }).then(() => {
-      navigate('/signup');
+      navigate('/home');
     });
   }
 

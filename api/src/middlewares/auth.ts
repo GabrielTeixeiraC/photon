@@ -37,12 +37,12 @@ export async function loginMiddleware(req: Request, res: Response, next: NextFun
     });
 
     if (!user) {
-      throw new PermissionError('E-mail and/or password incorrect!');
+      throw new PermissionError('Invalid e-mail and/or password.');
     }
 
     const matchingPassword = await compare(req.body.password, user.password);
     if (!matchingPassword) {
-      throw new PermissionError('E-mail and/or password incorrect!');
+      throw new PermissionError('Invalid e-mail and/or password.');
     }
 
     generateJWT(user.id, res);
@@ -60,7 +60,7 @@ export function notLoggedIn(req: Request, res: Response, next: NextFunction) {
     if (token) {
       const decoded = verify(token, getEnv('SECRET_KEY'));
       if (decoded) {
-        throw new PermissionError('You are already logged in!');
+        throw new PermissionError('You are already logged in.');
       }
     }
     next();
@@ -79,7 +79,7 @@ export function verifyJWT(req: Request, res: Response, next: NextFunction) {
 
     if (!req.userId) {
       throw new PermissionError(
-        'You need to be logged in to access this resource!');
+        'You need to be logged in to access this resource.');
     }
     next();
   } catch (error) {
