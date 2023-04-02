@@ -1,5 +1,6 @@
 import Login from './components/Login/Login'
 import SignUp from './components/SignUp/SignUp';
+import Sidebar from './components/Sidebar/Sidebar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 
@@ -10,10 +11,7 @@ function App() {
         <Routes>
           <Route
             path="/home"
-            element={
-              <>
-              </>
-            }
+            element={<Sidebar />}
           />
           <Route
             path="/profile"

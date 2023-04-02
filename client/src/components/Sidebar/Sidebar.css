@@ -1,0 +1,55 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background: #fff;
+  border-right: 1px solid #e6e1e1;
+  z-index: 1000;
+}
+
+h1 Link {
+  color: #000000;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-item {
+  color: #000000;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 80%;
+  height: 50px;
+  border-radius: 4em;
+  margin: 0.75em 0 0.75em 0;
+}
+
+.list-icon {
+  display: flex;
+  margin: 0 1em 0 1em;
+  padding: 0;
+  width: 2em;
+  height: 2em;
+}
+
+.list-text {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.list-item:hover {
+  background: #f5f5f5;
+  color: #000000;
+  transition: 0.2s;
+}
