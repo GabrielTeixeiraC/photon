@@ -8,6 +8,7 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 # Membros da Equipe
 - Gabriel Lima Barros - Backend Dev
 - Gabriel Teixeira Carvalho - Full Stack
+- Mateus Braghini Parfini - Full Stack
 # Tecnologias
 - NodeJs
 - TypeScript
