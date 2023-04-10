@@ -14,7 +14,7 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - TypeScript
 - ReactJs
 - SQLite
-#Backlog do Produto
+# Backlog do Produto
 ## Seguir um usuário
 - Como usuário quero poder logar na minha conta cadastrada no sistema.
 ## Login no Sistema
@@ -37,7 +37,8 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - Como usuário quero poder ver fotos de uma categoria específica na seção Filter.
 ## Ver fotos apenas dos usuários seguidos
 - Como usuário quero poder ver as fotos  apenas dos usuários que eu sigo na seção Following.
-#Backlog da Sprint
+
+# Backlog da Sprint
 ## Criar rotas de navegação
 - História#1 - Como usuário, quero navegar entre as páginas da minha rede social
   - Configurar ambiente do back-end [Gabriel Lima]
