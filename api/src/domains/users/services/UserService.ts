@@ -1,11 +1,16 @@
 import { prisma } from "../../../lib/prisma"
 import { hash } from 'bcrypt';
 import { QueryError } from '../../../../errors/QueryError';
+import { PermissionError } from "../../../../errors/PermissionError";
 
 interface IUser {
   id: string;
   name: string;
   email: string;
+  username: string;
+  followers_count: number;
+  following_count: number;
+  likes_count: number;
   password: string;
   createdAt: Date;
 }
@@ -40,7 +45,7 @@ class UserServiceClass {
     return newUser;
   }
 
-  async findById(id: string) {
+  async getUserById(id: string) {
     const user = await prisma.user.findFirst({
       where: {
         id,
@@ -49,6 +54,7 @@ class UserServiceClass {
         id: true,
         name: true,
         email: true,
+        username: true,
         followers_count: true,
         following_count: true,
         likes_count: true,
@@ -62,6 +68,26 @@ class UserServiceClass {
 
     return user;
   }
+
+  async editUser(id: string, body: IUser){
+    const userData = body
+    if(body.id != undefined){
+      throw new PermissionError("You don't have the permission")
+    }
+    await prisma.user.update({
+      where:{id,
+      },
+      data: userData,
+    });
+    const updatedUser = this.getUserById(id)
+    if (!updatedUser) {
+      throw new QueryError('User not found');
+    }
+
+    return updatedUser;
+  }
 }
+
+
 
 export const UserService = new UserServiceClass();

@@ -11,7 +11,7 @@ router.post('/login', notLoggedIn, loginMiddleware);
 
 router.post('/', 
   async (req: Request, res: Response, next: NextFunction) => {
-    try {      
+    try {     
       await UserService.create(req.body);
       res.status(statusCodes.CREATED).end();
     } catch (error) {
@@ -24,10 +24,35 @@ router.get('/me',
   verifyJWT, 
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await UserService.findById(req.userId!);
+      const user = await UserService.getUserById(req.userId!);
       res.status(statusCodes.SUCCESS).json(user);
-    } catch (error) {
+    } catch (error) { 
       next(error);
     }
   },
 );
+
+router.get('/:id',
+verifyJWT,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      const user = await UserService.getUserById(req.params.id);
+      res.status(statusCodes.SUCCESS).json(user);
+    } catch (error) {
+      next(error)
+    }
+  },
+);
+
+router.put('/:id',
+verifyJWT,
+  async (req: Request, res:Response, next: NextFunction) => {
+    try{ 
+      const user = await UserService.editUser(req.params.id,req.body);
+      res.status(statusCodes.SUCCESS).json(user);
+    } catch (error) {
+      next(error)
+    }
+  },
+);
+

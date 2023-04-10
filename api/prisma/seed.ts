@@ -20,6 +20,7 @@ async function run() {
         id: firstUserId,
         name: 'Gabriel Lima Barros',
         email: 'lima@gmail.com',
+        username: 'gabriellimab',
         password: firstPassword,
       }
     }),
@@ -29,6 +30,7 @@ async function run() {
         id: secondUserId,
         name: 'Gabriel Teixeira Carvalho',
         email: 'teixeira@gmail.com',
+        username: 'gteixeirac',
         password: secondPassword,
       }
     })
