@@ -15,19 +15,17 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - ReactJs
 - SQLite
 # Backlog do Produto
-## Seguir um usuário
-- Como usuário quero poder logar na minha conta cadastrada no sistema.
-## Login no Sistema
-- Como usuário quero poder postar uma foto com uma categoria.
 ## Postar uma foto
+- Como usuário quero poder postar uma foto com uma categoria.
+## Armazenar fotos dos usuários
 - Como usuário quero poder enviar uma foto para o sistema e ter ela armazenada.
 ## Deletar uma foto
 - Como usuário quero poder deletar uma foto.
-## Armazenar fotos dos usuários
-- Como usuário quero poder ver os números de um perfil (seguidores, seguindo, likes, publicações).
 ## Ver os números do próprio usuário
-- Como usuário quero poder clicar e ver uma foto específica, seus likes, o usuário que postou e os comentários.
+- Como usuário quero poder ver os números de um perfil (seguidores, seguindo, likes, publicações).
 ## Ver uma foto específica
+- Como usuário quero poder clicar e ver uma foto específica, seus likes, o usuário que postou e os comentários.
+## Seguir um usuário
 - Como usuário quero poder seguir um usuário e ser seguido.
 ## Ver todas as fotos de um usuário
 - Como usuário quero poder ver todas as fotos de um perfil (as próprias na página Perfil).
@@ -37,10 +35,8 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - Como usuário quero poder ver fotos de uma categoria específica na seção Filter.
 ## Ver fotos apenas dos usuários seguidos
 - Como usuário quero poder ver as fotos  apenas dos usuários que eu sigo na seção Following.
-
 # Backlog da Sprint
-## Criar rotas de navegação
-- História#1 - Como usuário, quero navegar entre as páginas da minha rede social
+- História#1 - Como usuário, quero me cadastrar na rede social.
   - Configurar ambiente do back-end [Gabriel Lima]
   - Configuração do express e .env [Gabriel Lima]
   - Criar BD [Gabriel Lima]
@@ -50,3 +46,15 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
   - Fazer form de cadastro [Gabriel Teixeira]
   - Conectar com o back [Gabriel Teixeira]
   - Estilizar [Gabriel Teixeira]
+- História#2 - Como usuário quero poder logar na minha conta cadastrada no sistema.
+  - Criar página de login [Gabriel Teixeira]
+  - Fazer estilização do login [Gabriel Teixeira]
+  - Criar lógica de login no backend [Gabriel Lima]
+  - Fazer validação de dados no input [Mateus Pardini]
+  - Criar alerta pra validar login do usuário (AddToast) [Mateus Pardini]
+  - Fazer rota de acesso ao menu principal enquanto logado [Gabriel Lima]
+  - Configurar o header para usuário logado/deslogado [Gabriel Teixeira]
+- História#3 - Como usuário quero ter uma área de perfil.
+  - Criar rota da página de perfil [Gabriel Lima]
+  - Criar página de perfil de acordo com o design [Gabriel Teixeira]
+  - Linkar página de perfil com o usuário logado [Mateus Pardini]
