@@ -17,9 +17,8 @@ model User {
   email           String   @unique
   username        String   @unique
   password        String
-  followers_count Int      @default(0)
-  following_count Int      @default(0)
-  likes_count     Int      @default(0)
+  followed_by     User[]   @relation("UserFollows")
+  following       User[]   @relation("UserFollows")
   created_at      DateTime @default(now())
 
   @@map("users")

@@ -8,8 +8,8 @@ interface IUser {
   name: string;
   email: string;
   username: string;
-  followers_count: number;
-  following_count: number;
+  followed_by: IUser[];
+  following: IUser[];
   likes_count: number;
   password: string;
   createdAt: Date;
@@ -55,9 +55,14 @@ class UserServiceClass {
         name: true,
         email: true,
         username: true,
-        followers_count: true,
-        following_count: true,
-        likes_count: true,
+        followed_by: {select:{
+          id: true,
+          },
+        },
+        following: {select:{
+          id: true,
+          },
+        },
         created_at: true,
       },
     });
@@ -86,6 +91,59 @@ class UserServiceClass {
 
     return updatedUser;
   }
+
+  async followUser(followingId: string, followedId: string) {
+    const followed = await prisma.user.findFirst({
+      where: {
+        id: followedId,
+      },
+    });
+
+    if (!followed) {
+      throw new QueryError('User not found');
+    }
+
+    const following = await prisma.user.findFirst({
+      where: {
+        id: followingId,
+      },
+    });
+
+    if (!following) {
+      throw new QueryError('User not found');
+    }
+
+    // Define a error if the user is already following the other user
+    const alreadyFollowing = await prisma.user.findFirst({
+      where: {
+        following: {
+          some: {
+            id: followedId,
+          },
+        }
+    },
+    });
+
+    if (alreadyFollowing) {
+      throw new QueryError('User already followed');
+    }
+
+    const followingUser = await prisma.user.update({
+      where: {
+        id: followedId,
+      },
+      data: {
+        followed_by: {
+          connect: {
+            id: followingId,
+          },
+        },
+      },
+    });
+
+    return followingUser;
+  }
+
 }
 
 
