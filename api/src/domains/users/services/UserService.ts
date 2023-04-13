@@ -113,7 +113,6 @@ class UserServiceClass {
       throw new QueryError('User not found');
     }
 
-    // Define a error if the user is already following the other user
     const alreadyFollowing = await prisma.user.findFirst({
       where: {
         following: {
@@ -144,8 +143,55 @@ class UserServiceClass {
     return followingUser;
   }
 
+  async unfollowUser(followingId: string, followedId: string) {
+    const followed = await prisma.user.findFirst({
+      where: {
+        id: followedId,
+      },
+    });
+
+    if (!followed) {
+      throw new QueryError('User not found');
+    }
+
+    const following = await prisma.user.findFirst({
+      where: {
+        id: followingId,
+      },
+    });
+
+    if (!following) {
+      throw new QueryError('User not found');
+    }
+
+    const alreadyFollowing = await prisma.user.findFirst({
+      where: { 
+        following: {
+          some: {
+            id: followedId,
+          },
+        }
+      },
+    });
+
+    if (!alreadyFollowing) {
+      throw new QueryError('User not followed');
+    }
+
+    const unfollowingUser = await prisma.user.update({
+      where: {
+        id: followedId,
+      },
+      data: {
+        followed_by: {
+          disconnect: {
+            id: followingId,
+          },
+        },
+      },
+    });
+
+    return unfollowingUser;
+  }
 }
-
-
-
 export const UserService = new UserServiceClass();
