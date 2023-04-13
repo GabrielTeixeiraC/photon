@@ -193,5 +193,6 @@ class UserServiceClass {
 
     return unfollowingUser;
   }
+
 }
 export const UserService = new UserServiceClass();

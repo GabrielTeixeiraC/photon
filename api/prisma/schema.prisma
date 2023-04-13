@@ -19,7 +19,19 @@ model User {
   password        String
   followed_by     User[]   @relation("UserFollows")
   following       User[]   @relation("UserFollows")
+  picture         Picture[]
   created_at      DateTime @default(now())
 
   @@map("users")
 }
+
+model Picture {
+  id              String   @id @default(uuid())
+  user_id         String
+  user            User     @relation(fields: [user_id], references: [id])
+  picture_url     String
+  created_at      DateTime @default(now())
+
+  @@map("pictures")
+}
+
