@@ -4,6 +4,7 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import { useState } from 'react';
 import { Error, Input, Button } from '../Atoms';
 import { login } from '../../services/authenticate';
+import { getLoggedUser } from '../../services/user';
 import '../Form.css';
 
 export default function Login() {
@@ -32,6 +33,9 @@ export default function Login() {
     }).then(() => {
       navigate('/home');
     });
+
+    const user = await getLoggedUser();
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   return(
