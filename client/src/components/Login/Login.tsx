@@ -37,14 +37,14 @@ export default function Login() {
   return(
     <div className="form-wrapper">
       <h1>photon</h1>
-      <h2>Fotos para todos.</h2>
+      <h2>Photos for everyone.</h2>
       <form onSubmit={handleSubmit}>
         <Input type="email" placeholder="Email" loading={loading} setValue={setEmail} value={email} Icon={EmailOutlinedIcon} />
-        <Input type="password" placeholder="Senha" loading={loading} setValue={setPassword} value={password} Icon={HttpsOutlinedIcon} />
-        <Button loading={loading} buttonText='Entrar'/>
+        <Input type="password" placeholder="Password" loading={loading} setValue={setPassword} value={password} Icon={HttpsOutlinedIcon} />
+        <Button loading={loading} buttonText='LOGIN'/>
       </form>
       {error ? <Error error={error} /> : null}
-      <h4>NÃO TEM UMA CONTA? <Link to='/signup'>INSCREVA-SE</Link></h4>
+      <h4>DOESN'T HAVE AN ACCOUNT? <Link to='/signup'>SIGN UP</Link></h4>
     </div>
   );
 }

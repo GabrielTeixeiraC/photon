@@ -8,8 +8,6 @@ interface IUser {
   name: string;
   email: string;
   username: string;
-  followed_by: IUser[];
-  following: IUser[];
   likes_count: number;
   password: string;
   createdAt: Date;
@@ -23,20 +21,31 @@ class UserServiceClass {
   }
 
   async create(body: IUser) {
-    const user = await prisma.user.findFirst({
+    const userEmail = await prisma.user.findFirst({
       where: {
         email: body.email,
       },
     });
 
-    if (user) {
-      throw new QueryError('User already exists');
+    if (userEmail) {
+      throw new QueryError('Email already in use');
     }
+
+    const userUsername = await prisma.user.findFirst({
+      where: {
+        username: body.username,
+      },
+    });
     
+    if (userUsername) {
+      throw new QueryError('Username already in use');
+    }
+
     const encryptedPassword = await this.encryptPassword(body.password);
     const newUser = await prisma.user.create({
       data: {
         name: body.name,
+        username: body.username,
         email: body.email,
         password: encryptedPassword,
       },
