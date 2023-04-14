@@ -1,4 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
+import { useState } from "react";
 import "./Profile.css";
 
 export default function Profile() {
