@@ -1,13 +1,12 @@
-import api from './api';
 import { AxiosError } from 'axios';
+import api from './api';
 
 export const getLoggedUser = async () => {
-  const response = await api.get(`/users/me`).catch(
-    (error: AxiosError) => {
-      if (error.response) {
-        throw error.response.data;
-      }
-  });
-
-  return response;
-}
+  try {
+    const response = await api.get('/users/me/');
+    return response;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};

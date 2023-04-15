@@ -32,6 +32,18 @@ router.get('/me',
   },
 );
 
+router.get('/',
+verifyJWT,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await UserService.getAllUsers();
+      res.status(statusCodes.SUCCESS).json(user);
+    } catch (error) {
+      next(error)
+    }
+  },
+);
+
 router.get('/:id',
 verifyJWT,
   async (req: Request, res: Response, next: NextFunction) => {

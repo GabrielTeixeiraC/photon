@@ -1,17 +1,7 @@
-import { prisma } from "../../../lib/prisma"
+import { prisma } from "../../../lib/prisma";
+import { User } from "@prisma/client";
 import { hash } from 'bcrypt';
 import { QueryError } from '../../../../errors/QueryError';
-import { PermissionError } from "../../../../errors/PermissionError";
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  username: string;
-  likes_count: number;
-  password: string;
-  createdAt: Date;
-}
 
 class UserServiceClass {
   async encryptPassword(password: string) {
@@ -20,7 +10,7 @@ class UserServiceClass {
     return encryptedPassword;
   }
 
-  async create(body: IUser) {
+  async create(body: User) {
     const userEmail = await prisma.user.findFirst({
       where: {
         email: body.email,
@@ -54,6 +44,32 @@ class UserServiceClass {
     return newUser;
   }
 
+  async getAllUsers() {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        username: true,
+        followed_by: {select:{
+          id: true,
+          },
+        },
+        following: {select:{
+          id: true,
+          },
+        },
+        created_at: true,
+      },
+    });
+
+    if (!users) {
+      throw new QueryError('No users found');
+    }
+
+    return users;
+  }
+
   async getUserById(id: string) {
     const user = await prisma.user.findFirst({
       where: {
@@ -83,11 +99,33 @@ class UserServiceClass {
     return user;
   }
 
-  async editUser(id: string, body: IUser){
-    const userData = body
-    if(body.id != undefined){
-      throw new PermissionError("You don't have the permission")
+  async editUser(id: string, body: Partial<Omit<User, 'id'>> ){
+    const userData = body;
+
+    if (body.username) {
+      const userUsername = await prisma.user.findFirst({
+        where: {
+          username: body.username,
+        },
+      });
+
+      if (userUsername) {
+        throw new QueryError('Username already in use');
+      }
     }
+
+    if (body.email) {
+      const userEmail = await prisma.user.findFirst({
+        where: {
+          email: body.email,
+        },
+      });
+
+      if (userEmail) {
+        throw new QueryError('Email already in use');
+      }
+    }
+
     await prisma.user.update({
       where:{id,
       },
