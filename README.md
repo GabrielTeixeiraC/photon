@@ -15,8 +15,6 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - ReactJs
 - SQLite
 # Backlog do Produto
-## Postar uma foto
-- Como usuário quero poder postar uma foto com uma categoria.
 ## Armazenar fotos dos usuários
 - Como usuário quero poder enviar uma foto para o sistema e ter ela armazenada.
 ## Deletar uma foto
@@ -25,16 +23,12 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - Como usuário quero poder ver os números de um perfil (seguidores, seguindo, likes, publicações).
 ## Ver uma foto específica
 - Como usuário quero poder clicar e ver uma foto específica, seus likes, o usuário que postou e os comentários.
-## Seguir um usuário
-- Como usuário quero poder seguir um usuário e ser seguido.
 ## Ver todas as fotos de um usuário
 - Como usuário quero poder ver todas as fotos de um perfil (as próprias na página Perfil).
 ## Ver as fotos em alta
 - Como usuário quero poder ver as fotos mais curtidas no último dia na seção Trending.
 ## Ver fotos de uma categoria
 - Como usuário quero poder ver fotos de uma categoria específica na seção Filter.
-## Ver fotos apenas dos usuários seguidos
-- Como usuário quero poder ver as fotos  apenas dos usuários que eu sigo na seção Following.
 # Backlog da Sprint
 - História#1 - Como usuário, quero me cadastrar na rede social.
   - Configurar ambiente do back-end [Gabriel Lima]
@@ -58,3 +52,13 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
   - Criar rota da página de perfil [Gabriel Lima]
   - Criar página de perfil de acordo com o design [Gabriel Teixeira]
   - Linkar página de perfil com o usuário logado [Mateus Pardini]
+- História#4 - Como usuário quero seguir e deixar de seguir outros usuários
+  - Criar botão para seguir/deixar de seguir um usuário em seu perfil [Mateus Pardini]
+  - Implementar a lógica de seguir/ deixar de seguir um usuário no Backend [Gabriel Lima]
+  - Implementar número de pessoas seguidas no perfil do usuário [Gabriel Teixeira]
+- História#5 - Como usuário quero postar uma foto no meu perfil
+  - Adicionar área para fazer o upload da(s) foto(s) escolhida(s) [Gabriel Teixeira]
+  - Implementar como adicionar uma foto ao sistema [Mateus Pardini]
+  - Linkar foto(s) com o perfil que está adicionando a foto [Gabriel Lima]
+  - Implementar lógica para que a(s) foto(s) postada(s) apareça(m) para os usuários que seguem esse perfil [Mateus Pardini]
+
