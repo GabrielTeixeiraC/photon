@@ -1,4 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
+import { ProfilePost } from "../Atoms";
 import { useState, useEffect } from "react";
 import { getLoggedUser } from "../../services/user";
 import "./Profile.css";
@@ -47,7 +48,6 @@ export default function Profile() {
       <Sidebar />
       <div className="profile-content">
         <div className="profile">
-
           <div className="profile-header">
             <img src="https://picsum.photos/200" alt="profile" className="profile-avatar" />
             {user && (
@@ -66,10 +66,7 @@ export default function Profile() {
           </div>
           <div className="profile-posts">
             {posts.map((post, index) => (
-              <div className="profile-post-wrapper">
-                <img src={post.src} alt={post.alt} className="profile-post" />
-                <div className="profile-post-overlay">{post.likes}</div>
-              </div>
+              <ProfilePost post={post} index={index} />
             ))}
           </div>
         </div>

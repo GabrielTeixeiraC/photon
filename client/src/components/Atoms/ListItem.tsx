@@ -1,6 +1,7 @@
 import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Link } from "react-router-dom";
+import "./ListItem.css";
 
 interface ListItemProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {muiName: string;}
@@ -11,7 +12,7 @@ interface ListItemProps {
 export function ListItem({ Icon, text, link }: ListItemProps) {
   return (
     <Link to={link} className="list-item">
-      <div className="list-icon"><Icon sx={{alignSelf: 'center'}}/></div>
+      <Icon sx={{alignSelf: 'center'}} className="list-icon"/>
       <p className="list-text">{text}</p>
     </Link>
   );
