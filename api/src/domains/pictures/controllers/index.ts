@@ -20,7 +20,6 @@ router.post('/',
         }
 });
 
-//route user likes a picture
 router.put('/likes/:id', 
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
