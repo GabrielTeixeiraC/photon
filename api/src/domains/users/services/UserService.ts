@@ -126,7 +126,12 @@ class UserServiceClass {
       }
     }
 
-    await prisma.user.update({
+    if (body.password) {
+      const encryptedPassword = await this.encryptPassword(body.password);
+      userData.password = encryptedPassword;
+    }
+
+    await prisma.user.update({  
       where:{id,
       },
       data: userData,

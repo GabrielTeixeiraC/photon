@@ -20,6 +20,7 @@ model User {
   followed_by     User[]   @relation("UserFollows")
   following       User[]   @relation("UserFollows")
   picture         Picture[]
+  liked           Picture[] @relation("UserLikes")
   created_at      DateTime @default(now())
 
   @@map("users")
@@ -29,6 +30,7 @@ model Picture {
   id              String   @id @default(uuid())
   user_id         String
   user            User     @relation(fields: [user_id], references: [id])
+  likes           User[]   @relation("UserLikes")
   picture_url     String
   created_at      DateTime @default(now())
 
