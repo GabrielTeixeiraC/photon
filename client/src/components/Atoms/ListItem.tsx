@@ -7,11 +7,12 @@ interface ListItemProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {muiName: string;}
   text: string;
   link: string;
+  onClick?: () => void;
 }
 
-export function ListItem({ Icon, text, link }: ListItemProps) {
+export function ListItem({ Icon, text, link, onClick }: ListItemProps) {
   return (
-    <Link to={link} className="list-item">
+    <Link onClick={onClick} to={link} className="list-item">
       <Icon sx={{alignSelf: 'center'}} className="list-icon"/>
       <p className="list-text">{text}</p>
     </Link>

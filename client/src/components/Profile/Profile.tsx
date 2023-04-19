@@ -66,7 +66,7 @@ export default function Profile() {
           </div>
           <div className="profile-posts">
             {posts.map((post, index) => (
-              <ProfilePost post={post} index={index} />
+              <ProfilePost post={post} key={index} />
             ))}
           </div>
         </div>

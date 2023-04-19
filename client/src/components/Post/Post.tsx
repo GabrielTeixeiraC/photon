@@ -7,14 +7,16 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import './Post.css'
 
 interface PostProps {
-  src: string;
-  alt: string;
-  likes: number;
+  post: {
+    src: string;
+    alt: string;
+    likes: number;
+  };
 }
 
-export default function Post({src, alt, likes}: PostProps) {
+export default function Post({post}: PostProps) {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes);
+  const [likeCount, setLikeCount] = useState(post.likes);
 
   function handleClick() {
     setLiked(!liked);
@@ -34,7 +36,7 @@ export default function Post({src, alt, likes}: PostProps) {
         </h4>
       </div>
       <div className="post-image-container" onDoubleClick={handleClick}>
-        <img className="post-photo" src={src} alt={alt} />
+        <img className="post-photo" src={post.src} alt={post.alt} />
         {liked && 
         <div className="post-overlay">
           <FavoriteIcon sx={{ fontSize: "8em", color: "white" }} className='post-overlay-heart' />

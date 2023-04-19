@@ -22,3 +22,14 @@ export const signup = async (name: string, username: string, email: string, pass
 
   return response;
 }
+
+export const logout = async () => {
+  const response = await api.post('/users/logout/').catch(
+    (error: AxiosError) => {
+      if (error.response) {
+        throw error.response.data;
+      }
+  });
+
+  return response;
+}

@@ -1,13 +1,22 @@
 import { Link } from 'react-router-dom';
+import { ListItem } from '../Atoms/ListItem';
+import { logout } from '../../services/authenticate';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { ListItem } from '../Atoms/ListItem';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import './Sidebar.css';
 
 export default function Sidebar() {
+  async function handleClick() {
+    await logout().catch((err) => {
+      console.log(err);
+      throw err;
+    });
+  }
+
   return (
     <div className="sidebar">
       <h1>
@@ -18,7 +27,8 @@ export default function Sidebar() {
         <ListItem Icon={SearchOutlinedIcon} text="Explore" link="/home" />
         <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" link="/home" />
         <ListItem Icon={SendOutlinedIcon} text="Messages" link="/home" />
-        <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link="/me" />        
+        <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link="/me" />
+        <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />
       </div>
     </div>
   );

@@ -7,8 +7,32 @@ import './Home.css';
 export default function Home() {
   const [selected, setSelected] = useState('For You');
 
+  const posts = [
+    {
+      src: 'https://picsum.photos/1200',
+      alt: 'post',
+      likes: 10,
+    },
+    {
+      src: 'https://picsum.photos/1201',
+      alt: 'post',
+      likes: 11,
+    },
+    {
+      src: 'https://picsum.photos/1202',
+      alt: 'post',
+      likes: 7,
+    },
+    {
+      src: 'https://picsum.photos/1203',
+      alt: 'post',
+      likes: 14,
+    },
+  ];
+
   function handleClick(text: string) {
     setSelected(text);
+      
   }
 
   return (
@@ -21,9 +45,9 @@ export default function Home() {
           <SectionButton text='Filter' link='/home' selected={selected} handleClick={handleClick} />
         </div>
         <div className="home-photos">
-          <Post src='https://picsum.photos/1400' alt='Post1' likes={11}/>
-          <Post src='https://picsum.photos/1600' alt='Post1' likes={4}/>
-          <Post src='https://picsum.photos/1700' alt='Post1' likes={7}/>
+          {posts.map((post, index) => (
+            <Post post={post} key={index} />  
+          ))}
         </div>
       </div>
     </div>
