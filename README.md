@@ -48,10 +48,12 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
   - Criar alerta pra validar login do usuário (AddToast) [Mateus Pardini]
   - Fazer rota de acesso ao menu principal enquanto logado [Gabriel Lima]
   - Configurar o header para usuário logado/deslogado [Gabriel Teixeira]
-- História#3 - Como usuário quero ter uma área de perfil.
-  - Criar rota da página de perfil [Gabriel Lima]
+- História#3 - Como usuário quero ver as fotos de um perfil específico
   - Criar página de perfil de acordo com o design [Gabriel Teixeira]
-  - Linkar página de perfil com o usuário logado [Mateus Pardini]
+  - Fazer roteamento da aplicação incluindo perfil próprio e de outros usuários [Gabriel Teixeira]
+  - Fazer rota para retornar todas as fotos de um usuário [Gabriel Lima]
+  - Fazer rota para retornar os números de um perfil [Mateus Pardini]
+  - Linkar página de perfil com o usuário especificado [Mateus Pardini]
 - História#4 - Como usuário quero seguir e deixar de seguir outros usuários
   - Criar botão para seguir/deixar de seguir um usuário em seu perfil [Mateus Pardini]
   - Implementar a lógica de seguir/ deixar de seguir um usuário no Backend [Gabriel Lima]
@@ -59,6 +61,22 @@ O objetivo do nosso sistema é criar uma rede de compartilhamento de imagens.
 - História#5 - Como usuário quero postar uma foto no meu perfil
   - Adicionar área para fazer o upload da(s) foto(s) escolhida(s) [Gabriel Teixeira]
   - Implementar como adicionar uma foto ao sistema [Mateus Pardini]
+  - Fazer modal para adicionar foto e categoria [Mateus Pardini]
   - Linkar foto(s) com o perfil que está adicionando a foto [Gabriel Lima]
-  - Implementar lógica para que a(s) foto(s) postada(s) apareça(m) para os usuários que seguem esse perfil [Mateus Pardini]
+- História#6 - Como usuário quero curtir uma foto
+  - Implementar botão de curtir [Gabriel Teixeira]
+  - Implementar rota de curtir uma foto [Gabriel Lima]
+  - Implementar rota para retornar quantidade de likes de uma foto [Gabriel Lima]
+  - Conectar front-end com back-end [Mateus Pardini]
+- História#7 - Como usuário quero ver as abas de Em alta, Seguindo e Filtro no feed
+  - Criar página de feed [Gabriel Teixeira]
+  - Criar rota para retornar as fotos com mais likes nas últimas 24 horas [Gabriel Lima]
+  - Criar rota para retornar as fotos de perfis que o usuário segue [Gabriel Lima]
+  - Criar rota para retornar as fotos de uma categoria específica [Mateus Pardini]
+  - Implementar funcionalidades de cada aba [Mateus Pardini]
+
+
+
+
+
 
