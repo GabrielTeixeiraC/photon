@@ -13,7 +13,7 @@ export default function Sidebar() {
       <h1>
         <Link to='/home'>photon</Link>
       </h1>
-      <div className="list">
+      <div className="sidebar-list">
         <ListItem Icon={HomeOutlinedIcon} text="Home" link="/home" />
         <ListItem Icon={SearchOutlinedIcon} text="Explore" link="/home" />
         <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" link="/home" />

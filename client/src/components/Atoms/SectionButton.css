@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-h3 {
+.section-button h3 {
   font-size: 1.5rem;
   font-weight: 500;
   margin: 0;
@@ -15,11 +15,11 @@ h3 {
   transition: 0.2s;
 }
 
-h3:hover {
+.section-button h3:hover {
   color: #000000a9;
 }
 
-.selected {
+.section-button .selected {
   border-bottom: 2px solid #000000;
 }
 

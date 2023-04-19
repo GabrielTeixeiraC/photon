@@ -37,16 +37,16 @@ export default function Post({src, alt, likes}: PostProps) {
           </Link>
         </h4>
       </div>
-      <img className="photo" onDoubleClick={handleClick} src={src} alt={alt} /> 
+      <img className="post-photo" onDoubleClick={handleClick} src={src} alt={alt} /> 
       <div className="post-footer">
         <div className="post-footer-left">
           {liked ? (
-            <FavoriteOutlinedIcon onClick={handleClick} sx={{ fontSize: "2.2rem", fill: "red"}} className='heart-icon' />
+            <FavoriteOutlinedIcon onClick={handleClick} sx={{ fontSize: "2.2rem", fill: "red"}} className='post-heart-icon' />
           ) : (
-            <FavoriteBorderOutlinedIcon onClick={handleClick} sx={{fontSize: "2.2rem"}} className='heart-icon' />
+            <FavoriteBorderOutlinedIcon onClick={handleClick} sx={{fontSize: "2.2rem"}} className='post-heart-icon' />
           )}
           
-          <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "2.2rem" }} className='footer-icon' />
+          <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "2.2rem" }} className='post-footer-icon' />
         </div>
         <div className="post-footer-right">
           <h3>{likes} likes</h3>

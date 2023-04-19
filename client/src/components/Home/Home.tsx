@@ -15,12 +15,12 @@ export default function Home() {
     <div className="home">
       <Sidebar />
       <div className="home-content">
-        <div className="header">
+        <div className="home-header">
           <SectionButton text='For You' link='/home' selected={selected} handleClick={handleClick} />
           <SectionButton text='Following' link='/home' selected={selected} handleClick={handleClick} />
           <SectionButton text='Filter' link='/home' selected={selected} handleClick={handleClick} />
         </div>
-        <div className="photos">
+        <div className="home-photos">
           <Post src='https://picsum.photos/1400' alt='Post1' likes='11'/>
           <Post src='https://picsum.photos/1600' alt='Post1' likes='4'/>
           <Post src='https://picsum.photos/1700' alt='Post1' likes='7'/>

@@ -29,14 +29,17 @@ export default function Profile() {
 
   // mock posts
   const posts = [
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
-    "https://picsum.photos/200",
+    { src: "https://picsum.photos/1000", alt: "Post1", likes: "11" },
+    { src: "https://picsum.photos/1001", alt: "Post2", likes: "4" },
+    { src: "https://picsum.photos/1002", alt: "Post3", likes: "7" },
+    { src: "https://picsum.photos/1003", alt: "Post4", likes: "11" },
+    { src: "https://picsum.photos/1004", alt: "Post5", likes: "4" },
+    { src: "https://picsum.photos/1005", alt: "Post6", likes: "7" },
+    { src: "https://picsum.photos/1006", alt: "Post7", likes: "11" },
+    { src: "https://picsum.photos/1007", alt: "Post8", likes: "4" },
+    { src: "https://picsum.photos/1008", alt: "Post9", likes: "7" },
+    { src: "https://picsum.photos/1009", alt: "Post10", likes: "11" },
+    { src: "https://picsum.photos/1011", alt: "Post11", likes: "4" },
   ];
 
   return (
@@ -45,24 +48,28 @@ export default function Profile() {
       <div className="profile-content">
         <div className="profile">
 
-          <div className="header">
-            <img src="https://picsum.photos/200" alt="profile" className="avatar" />
+          <div className="profile-header">
+            <img src="https://picsum.photos/200" alt="profile" className="profile-avatar" />
             {user && (
-              <div className="header-info">
-                <div className="names">
+              <div className="profile-header-info">
+                <div className="profile-names">
                   <h3>{user?.name}</h3>
                   <h3>@{user?.username}</h3>
                 </div>
-                <div className="numbers">
+                <div className="profile-numbers">
+                  <h4>Posts: {posts.length}</h4>
                   <h4>Following: {user?.following.length}</h4>
                   <h4>Followers: {user?.followed_by.length}</h4>
                 </div>
               </div>
             )}
           </div>
-          <div className="posts">
-            {posts.map((post) => (
-              <img src={post} alt="post" />
+          <div className="profile-posts">
+            {posts.map((post, index) => (
+              <div className="profile-post-wrapper">
+                <img src={post.src} alt={post.alt} className="profile-post" />
+                <div className="profile-post-overlay">{post.likes}</div>
+              </div>
             ))}
           </div>
         </div>
