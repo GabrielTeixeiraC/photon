@@ -9,6 +9,19 @@ export const router = Router();
 
 router.post('/login', notLoggedIn, loginMiddleware);
 
+router.post('/logout', 
+  verifyJWT, 
+  async(req: Request, res: Response, next:NextFunction) => {  
+    try{
+      res.clearCookie('jwt');
+      res.status(statusCodes.SUCCESS).end();
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+    
+
 router.post('/', 
   async (req: Request, res: Response, next: NextFunction) => {
     try {     
