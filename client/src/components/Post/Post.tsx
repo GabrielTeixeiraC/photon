@@ -2,27 +2,23 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import foto from '../../assets/foto.jpg';
 import './Post.css'
 
 interface PostProps {
   src: string;
   alt: string;
-  likes: string;
+  likes: number;
 }
 
 export default function Post({src, alt, likes}: PostProps) {
   const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
 
   function handleClick() {
     setLiked(!liked);
-
-    if (liked) {
-      console.log('unliked');
-    } else {
-      console.log('liked');
-    }
+    liked ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
   }
 
   return (
@@ -37,7 +33,13 @@ export default function Post({src, alt, likes}: PostProps) {
           </Link>
         </h4>
       </div>
-      <img className="post-photo" onDoubleClick={handleClick} src={src} alt={alt} /> 
+      <div className="post-image-container" onDoubleClick={handleClick}>
+        <img className="post-photo" src={src} alt={alt} />
+        {liked && 
+        <div className="post-overlay">
+          <FavoriteIcon sx={{ fontSize: "8em", color: "white" }} className='post-overlay-heart' />
+        </div>}
+      </div>
       <div className="post-footer">
         <div className="post-footer-left">
           {liked ? (
@@ -49,7 +51,7 @@ export default function Post({src, alt, likes}: PostProps) {
           <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "2.2rem" }} className='post-footer-icon' />
         </div>
         <div className="post-footer-right">
-          <h3>{likes} likes</h3>
+          <h3>{likeCount} likes</h3>
         </div>
       </div>
     </div>

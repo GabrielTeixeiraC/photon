@@ -21,9 +21,9 @@ export default function Home() {
           <SectionButton text='Filter' link='/home' selected={selected} handleClick={handleClick} />
         </div>
         <div className="home-photos">
-          <Post src='https://picsum.photos/1400' alt='Post1' likes='11'/>
-          <Post src='https://picsum.photos/1600' alt='Post1' likes='4'/>
-          <Post src='https://picsum.photos/1700' alt='Post1' likes='7'/>
+          <Post src='https://picsum.photos/1400' alt='Post1' likes={11}/>
+          <Post src='https://picsum.photos/1600' alt='Post1' likes={4}/>
+          <Post src='https://picsum.photos/1700' alt='Post1' likes={7}/>
         </div>
       </div>
     </div>
