@@ -1,4 +1,5 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import './ProfilePost.css';
 
 interface ProfilePostProps {
   post: {
