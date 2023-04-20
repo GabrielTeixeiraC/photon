@@ -43,6 +43,18 @@ router.put('/likes/:id',
         }
     });
 
+router.get('/top',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const pictures = await PictureService.getTopPictures();
+            res.status(statusCodes.SUCCESS).json(pictures);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 router.get('/profile/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {

@@ -88,6 +88,26 @@ class PictureServiceClass {
 
         return picture;
     }
+
+    async getTopPictures() {
+        const pictures = await prisma.picture.findMany({
+            where: {
+                created_at: {
+                    gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+                },
+            },
+            orderBy: {
+                likes: {
+                    _count: 'desc',
+                },
+            },
+            select: {
+                id: true,
+            },
+        });
+        
+        return pictures;
+    }
 }
 
 export const PictureService = new PictureServiceClass();
