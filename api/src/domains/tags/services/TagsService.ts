@@ -20,10 +20,10 @@ class TagServiceClass {
                 const tagExists = await prisma.picture.findFirst({
                     where: {
                         id: pictureId,
-                        tags: {
+                        tags:{
                             some: {
                                 name: tag.name,
-                            },
+                            },  
                         },
                     },
                 });

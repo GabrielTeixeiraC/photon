@@ -8,7 +8,7 @@ import { upload } from '../../../middlewares/multer';
   
 export const router = Router();
 
-// route to add a tag to a picture
+
 router.put('/add/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -20,3 +20,5 @@ router.put('/add/:id',
         }
     }
 );
+
+

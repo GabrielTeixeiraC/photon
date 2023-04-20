@@ -4,22 +4,34 @@ import { PermissionError } from "../../../../errors/PermissionError";
 
 
 class PictureServiceClass {
-    // function to upload picture
-    async uploadPicture(userId:string, file: any) {
-        const picture = await prisma.picture.create({
-            data: {
-                picture_url: file.filename,
-                user: {
-                    connect: {
-                        id: userId,
+    async uploadPicture(userId:string, file: any, profile: boolean = false) {
+        if (!profile) {
+            const picture = await prisma.picture.create({
+                data: {
+                    picture_url: file.filename,
+                    user: {
+                        connect: {
+                            id: userId,
+                        },
                     },
                 },
-            },
-        });
+            });
+        } else {
+            const picture = await prisma.picture.create({
+                data: {
+                    picture_url: file.filename,
+                    user: {
+                        connect: {
+                            id: userId,
+                        },
+                    },
+                    profile_picture: true,
+                },
+            });
         return picture;
+        }
     }
 
-    // function to like picture
     async likePicture(userId: string ,id: string) {
         const picture = await prisma.picture.findUnique({
             where: {
@@ -60,6 +72,21 @@ class PictureServiceClass {
         });
 
         return likedPicture;
+    }
+
+    async getProfilePicture(id: string) {
+        const picture = await prisma.picture.findFirst({
+            where: {
+                user_id: id,
+                profile_picture: true,
+            },
+        });
+
+        if (!picture) {
+            throw new QueryError('Picture not found');
+        }
+
+        return picture;
     }
 }
 

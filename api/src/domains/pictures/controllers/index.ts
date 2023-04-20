@@ -20,6 +20,18 @@ router.post('/',
         }
 });
 
+router.post('/profile',
+    verifyJWT,
+    upload,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const picture = await PictureService.uploadPicture(req.userId!,req.file, true);
+            res.status(statusCodes.CREATED).json(picture);
+        } catch (error) {
+            next(error);
+        }
+});
+
 router.put('/likes/:id', 
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -30,3 +42,15 @@ router.put('/likes/:id',
             next(error);
         }
     });
+
+router.get('/profile/:id',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const picture = await PictureService.getProfilePicture(req.params.id);
+            res.status(statusCodes.SUCCESS).json(picture);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
