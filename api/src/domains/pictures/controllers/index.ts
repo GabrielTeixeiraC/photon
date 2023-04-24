@@ -67,11 +67,23 @@ router.get('/:id',
     }
 );
 
-router.get('/profile/:id',
+router.get('/user/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.getProfilePicture(req.params.id);
+            const picture = await PictureService.getPicturesByUser(req.params.id);
+            res.status(statusCodes.SUCCESS).json(picture);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+router.get('/tag/:id',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const picture = await PictureService.getPicturesByTag(req.params.id);
             res.status(statusCodes.SUCCESS).json(picture);
         } catch (error) {
             next(error);

@@ -5,31 +5,18 @@ import { PermissionError } from "../../../../errors/PermissionError";
 
 class PictureServiceClass {
     async uploadPicture(userId:string, file: any, profile: boolean = false) {
-        if (!profile) {
-            const picture = await prisma.picture.create({
-                data: {
-                    picture_url: file.filename,
-                    user: {
-                        connect: {
-                            id: userId,
-                        },
+        const picture = await prisma.picture.create({
+            data: {
+                picture_url: file.filename,
+                user: {
+                    connect: {
+                        id: userId,
                     },
                 },
-            });
-        } else {
-            const picture = await prisma.picture.create({
-                data: {
-                    picture_url: file.filename,
-                    user: {
-                        connect: {
-                            id: userId,
-                        },
-                    },
-                    profile_picture: true,
-                },
-            });
+                profile_picture: profile,
+            },
+        });
         return picture;
-        }
     }
 
     async getPicture(id: string) {
@@ -107,21 +94,6 @@ class PictureServiceClass {
         return likedPicture;
     }
 
-    async getProfilePicture(id: string) {
-        const picture = await prisma.picture.findFirst({
-            where: {
-                user_id: id,
-                profile_picture: true,
-            },
-        });
-
-        if (!picture) {
-            throw new QueryError('Picture not found');
-        }
-
-        return picture;
-    }
-
     async getTopPictures() {
         const pictures = await prisma.picture.findMany({
             where: {
@@ -138,6 +110,43 @@ class PictureServiceClass {
                 id: true,
             },
         });
+
+        return pictures;
+    }
+
+    async getPicturesByTag(tag: string) {
+        const pictures = await prisma.picture.findMany({
+            where: {
+                tags: {
+                    some: {
+                        id: tag,
+                    },
+                },
+            },
+            select: {
+                id: true,
+            },
+        });
+        if(!pictures) {
+            throw new QueryError('No pictures found');
+        }
+
+        return pictures;
+    }
+
+    async getPicturesByUser(userId: string) {
+        const pictures = await prisma.picture.findMany({
+            where: {
+                user_id: userId,
+                profile_picture: false,
+            },
+            select: {
+                id: true,
+            },
+        });
+        if(!pictures) {
+            throw new QueryError('No pictures found');
+        }
 
         return pictures;
     }
