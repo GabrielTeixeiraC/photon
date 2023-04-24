@@ -21,4 +21,16 @@ router.put('/add/:id',
     }
 );
 
+router.get('/',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const tags = await TagService.getTags();
+            res.status(statusCodes.SUCCESS).json(tags);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 

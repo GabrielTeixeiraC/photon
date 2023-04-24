@@ -89,6 +89,30 @@ class TagServiceClass {
             throw error;
         }
     }
+
+    async getTags() {
+        try {
+            const tags = await prisma.tag.findMany({
+                orderBy: {
+                    pictures: {
+                        _count: "desc",
+                    },
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    pictures: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                },
+            });
+            return tags;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export const TagService = new TagServiceClass();
