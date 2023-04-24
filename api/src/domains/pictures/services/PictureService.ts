@@ -32,6 +32,39 @@ class PictureServiceClass {
         }
     }
 
+    async getPicture(id: string) {
+        const picture = await prisma.picture.findUnique({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+                picture_url: true,
+                user: {
+                    select: {
+                        id: true,
+                    },
+                },
+                likes: {
+                    select: {
+                        id: true,
+                    },
+                },
+                tags: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+
+        if (!picture) {
+            throw new QueryError('Picture not found');
+        }
+        
+        return picture;
+    }
+
     async likePicture(userId: string ,id: string) {
         const picture = await prisma.picture.findUnique({
             where: {
@@ -105,7 +138,7 @@ class PictureServiceClass {
                 id: true,
             },
         });
-        
+
         return pictures;
     }
 }

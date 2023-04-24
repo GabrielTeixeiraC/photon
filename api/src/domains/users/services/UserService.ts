@@ -88,6 +88,14 @@ class UserServiceClass {
           id: true,
           },
         },
+        picture: {
+          where: {
+            profile_picture: true,
+          },
+          select: {
+            id: true,
+          },
+        },
         created_at: true,
       },
     });

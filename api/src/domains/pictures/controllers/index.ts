@@ -55,6 +55,18 @@ router.get('/top',
     }
 );
 
+router.get('/:id',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const picture = await PictureService.getPicture(req.params.id);
+            res.status(statusCodes.SUCCESS).json(picture);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 router.get('/profile/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
