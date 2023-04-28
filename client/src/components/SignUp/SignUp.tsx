@@ -6,7 +6,7 @@ import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 
 import { useState } from 'react';
 import { Error, Input, Button } from '../Atoms';
-import { signup } from '../../services/authenticate';
+import { signup, login } from '../../services/authenticate';
 import '../Form.css';
 
 export default function SignUp() {
@@ -42,7 +42,13 @@ export default function SignUp() {
       setLoading(false);
       throw err;
     }).then(() => {
-      navigate('/');
+       login(email, password).catch((err) => {
+        setError(err);
+        setLoading(false);
+        throw err;
+      }).then(() => {
+        navigate('/home');
+      });
     });
   }
 
