@@ -16,6 +16,15 @@ export default function Sidebar() {
       throw err;
     });
   }
+  async function changeDisplayCreate() {
+    let modal = document.querySelector('.modal-create') as HTMLElement;
+    modal.style.display = 'flex';
+
+  }
+  async function changeDisplayExplore() {
+    let modal = document.querySelector('.modal-explore') as HTMLElement;
+    modal.style.display = 'flex';
+  }
 
   return (
     <div className="sidebar">
@@ -24,8 +33,8 @@ export default function Sidebar() {
       </h1>
       <div className="sidebar-list">
         <ListItem Icon={HomeOutlinedIcon} text="Home" link="/home" />
-        <ListItem Icon={SearchOutlinedIcon} text="Explore" link="/home" />
-        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" link="/home" />
+        <ListItem Icon={SearchOutlinedIcon} text="Explore"onClick={changeDisplayExplore} link="/home" />
+        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={changeDisplayCreate} link='/home'/>
         <ListItem Icon={SendOutlinedIcon} text="Messages" link="/home" />
         <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link="/me" />
         <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />

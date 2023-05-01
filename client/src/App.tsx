@@ -3,8 +3,7 @@ import SignUp from './components/SignUp/SignUp';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css'
-
+import './App.css';
 function App() {
   return (
     <div className="App">
@@ -20,6 +19,7 @@ function App() {
           />
           <Route path="/signup" element={<SignUp />} />
           <Route index element={<Login />} />
+
         </Routes>
       </BrowserRouter>
     </div>
