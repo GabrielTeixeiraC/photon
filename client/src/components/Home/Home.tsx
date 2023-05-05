@@ -2,16 +2,28 @@ import { useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import Post from '../Post/Post';
 import { SectionButton } from '../Atoms/SectionButton';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
 import CategoryIcon from '@mui/icons-material/Category';
-import { Button, Input } from '../Atoms';
+import { Button, Input, Error} from '../Atoms';
 import './Home.css';
+import { getAllUsers } from '../../services/user';
+
 
 export default function Home() {
+  interface User {
+    name: string;
+    username: string;
+    email: string;
+    following: {id: string}[];
+    followed_by: {id: string}[];
+  }
+
   const [selected, setSelected] = useState('For You');
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
+  const [search, setSearch] = useState('');
+  const [user, setUser] = useState<User | null>(null);
 
   const posts = [
     {
@@ -49,6 +61,25 @@ export default function Home() {
     modal.style.display = 'none';
   }
   
+  
+  async function getUsers() {
+    try{
+      const response = await getAllUsers();
+      const usernames = response.data.map((user: User) => user.username);
+      if (usernames.includes(search)) {
+        console.log('Found');
+        window.location.href = `/home`;
+      }
+      else {
+        window.alert('User not found');
+      }
+    setUser(usernames); 
+    }catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+ 
+  
   return (
     <div className="home">
       <Sidebar />
@@ -63,8 +94,7 @@ export default function Home() {
           <div className='modal-header'><CloseIcon onClick={quitModalCreate} ></CloseIcon></div>
           <div className="modal-container">
             <h4> Upload a picture</h4>  
-            <Input type="text" placeholder="Category (Optional)" loading={loading} setValue={setCategory} value={category} Icon={CategoryIcon} />
-            <AddPhotoAlternateIcon></AddPhotoAlternateIcon>
+            <Input type="text" placeholder="Category (Optional)" loading={loading} setValue={setCategory} value={category} Icon={CategoryIcon} />          
             <Button loading={loading} buttonText='Upload'/>
           </div>
         </div>
@@ -72,11 +102,10 @@ export default function Home() {
       <div className='modal-explore'>
         <div className = 'modal-body'>
           <div className='modal-header'><CloseIcon onClick={quitModalExplore} ></CloseIcon></div>
-          <div className="modal-container">
-            <h4> Upload a picture</h4>  
-            <Input type="text" placeholder="Category (Optional)" loading={loading} setValue={setCategory} value={category} Icon={CategoryIcon} />
-            <AddPhotoAlternateIcon></AddPhotoAlternateIcon>
-            <Button loading={loading} buttonText='Upload'/>
+          <div className="modal-container-explore">
+            <h4> Find a Profile</h4>  
+            <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={SearchIcon} />
+            <button onClick={getUsers}>Search</button>
           </div>
         </div></div>
         <div className="home-photos">
