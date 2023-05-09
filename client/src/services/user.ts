@@ -30,3 +30,12 @@ export const getAllUsers = async () => {
     throw error;
   }
 }
+
+export const toggleFollow = async (id: string) => {
+  try {
+    await api.put('/users/follow/' + id);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}

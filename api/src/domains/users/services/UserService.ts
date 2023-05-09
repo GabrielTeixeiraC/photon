@@ -198,7 +198,7 @@ class UserServiceClass {
     return updatedUser;
   }
 
-  async followUser(followingId: string, followedId: string) {
+  async toggleFollow(followingId: string, followedId: string) {
     const followed = await prisma.user.findFirst({
       where: {
         id: followedId,
@@ -221,83 +221,46 @@ class UserServiceClass {
 
     const alreadyFollowing = await prisma.user.findFirst({
       where: {
+        id: followingId,
         following: {
           some: {
             id: followedId,
           },
-        }
-    },
+        },
+      },
     });
 
     if (alreadyFollowing) {
-      throw new QueryError('User already followed');
-    }
-
-    const followingUser = await prisma.user.update({
-      where: {
-        id: followedId,
-      },
-      data: {
-        followed_by: {
-          connect: {
-            id: followingId,
+      await prisma.user.update({
+        where: {
+          id: followingId,
+        },
+        data: {
+          following: {
+            disconnect: {
+              id: followedId,
+            },
           },
         },
-      },
-    });
+      });
 
-    return followingUser;
-  }
-
-  async unfollowUser(followingId: string, followedId: string) {
-    const followed = await prisma.user.findFirst({
-      where: {
-        id: followedId,
-      },
-    });
-
-    if (!followed) {
-      throw new QueryError('User not found');
+      return;
     }
 
-    const following = await prisma.user.findFirst({
+    await prisma.user.update({
       where: {
         id: followingId,
       },
-    });
-
-    if (!following) {
-      throw new QueryError('User not found');
-    }
-
-    const alreadyFollowing = await prisma.user.findFirst({
-      where: { 
-        following: {
-          some: {
-            id: followedId,
-          },
-        }
-      },
-    });
-
-    if (!alreadyFollowing) {
-      throw new QueryError('User not followed');
-    }
-
-    const unfollowingUser = await prisma.user.update({
-      where: {
-        id: followedId,
-      },
       data: {
-        followed_by: {
-          disconnect: {
-            id: followingId,
+        following: {
+          connect: {
+            id: followedId,
           },
         },
       },
     });
 
-    return unfollowingUser;
+    return;
   }
 
 }

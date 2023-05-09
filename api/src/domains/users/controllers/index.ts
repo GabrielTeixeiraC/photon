@@ -100,24 +100,11 @@ router.put('/follow/:id',
 verifyJWT,
   async (req: Request, res:Response, next: NextFunction) => {
     try{
-      const user = await UserService.followUser(req.userId!,req.params.id);
-      res.status(statusCodes.SUCCESS).json(user);
+      await UserService.toggleFollow(req.userId!, req.params.id);
+      res.status(statusCodes.SUCCESS).end();
     } catch(error){
       next(error)
     }
-  },
-);
-
-router.put('/unfollow/:id',
-verifyJWT,
-  async (req: Request, res:Response, next: NextFunction) => {
-    try{
-      const user = await UserService.unfollowUser(req.userId!,req.params.id);
-      res.status(statusCodes.SUCCESS).json(user);
-    }
-    catch(error){
-      next(error)
-      }
   },
 );
 

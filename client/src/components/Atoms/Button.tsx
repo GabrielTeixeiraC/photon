@@ -2,6 +2,7 @@ import MUIButton from '@mui/material/Button';
 
 interface ButtonProps {
   loading?: boolean;
+  onClick?: () => void;
   buttonText: string;
 }
 
@@ -17,9 +18,9 @@ const buttonStyle = {
   }
 };
 
-export function Button({ loading, buttonText} : ButtonProps) {
+export function Button({ loading, buttonText, onClick} : ButtonProps) {
   return(
     <div className="form-button">
-      <MUIButton type='submit' variant="outlined" disabled={loading} sx={buttonStyle}>{!loading ? buttonText : 'Loading...' }</MUIButton>
+      <MUIButton type='submit' variant="outlined" disabled={loading} onClick={onClick} sx={buttonStyle}>{!loading ? buttonText : 'Loading...' }</MUIButton>
     </div>
 )};
