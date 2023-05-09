@@ -20,7 +20,7 @@ export default function Login() {
     setError('');
 
     if (email === '' || password === '') {
-      setError('Preencha todos os campos');
+      setError('Fill in all inputs');
       setLoading(false);
       return;
     }
