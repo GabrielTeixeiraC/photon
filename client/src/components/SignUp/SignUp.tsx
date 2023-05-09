@@ -17,6 +17,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
   
   const navigate = useNavigate();
 
@@ -37,7 +38,11 @@ export default function SignUp() {
       return; 
     }
 
-    await signup(name, username, email, password).catch((err) => {
+    if (file === null) {
+      setFile(new File([], ''));
+    }
+
+    await signup(name, username, email, password, file).catch((err) => {
       setError(err);
       setLoading(false);
       throw err;
@@ -62,6 +67,7 @@ export default function SignUp() {
         <Input type="text" placeholder="Email" loading={loading} setValue={setEmail} value={email} Icon={EmailOutlinedIcon} />
         <Input type="password" placeholder="Password" loading={loading} setValue={setPassword} value={password} Icon={HttpsOutlinedIcon} />
         <Input type="password" placeholder="Confirm password" loading={loading} setValue={setConfirmPassword} value={confirmPassword} Icon={HttpsOutlinedIcon} />
+        <input type="file" accept='.png, .jpg, .jpeg' onChange={(e) => {setFile(e.target.files![0]); console.log(e.target.files![0]); setError('')}} />
         <Button loading={loading} buttonText='Sign Up'/>
       </form>
       {error ? <Error error={error} /> : null}  

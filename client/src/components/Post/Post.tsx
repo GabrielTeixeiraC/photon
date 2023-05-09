@@ -6,17 +6,26 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import './Post.css'
 
+interface User {
+  id: string;
+  username: string;
+  picture: {
+    picture_url: string;
+  }[]
+}
+
 interface PostProps {
   post: {
-    src: string;
-    alt: string;
-    likes: number;
+    user: User;
+    picture_url: string;
+    tags: string[];
+    likes: string[];
   };
 }
 
 export default function Post({post}: PostProps) {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
+  const [likeCount, setLikeCount] = useState(post.likes.length);
 
   function handleClick() {
     setLiked(!liked);
@@ -27,16 +36,16 @@ export default function Post({post}: PostProps) {
     <div className="post">
       <div className="post-header">
         <Link to='/home'>
-          <img src='https://picsum.photos/700' alt="user" />
+          <img src={'../../../' + post.user.picture[0].picture_url} alt="user" />
         </Link>
         <h4>
           <Link to='/home'>
-            gteixeirac
+            {post.user.username}
           </Link>
         </h4>
       </div>
       <div className="post-image-container" onDoubleClick={handleClick}>
-        <img className="post-photo" src={post.src} alt={post.alt} />
+        <img className="post-photo" src={'../../../' + post.picture_url} alt={post.picture_url} />
         {liked && 
         <div className="post-overlay">
           <FavoriteIcon sx={{ fontSize: "8em", color: "white" }} className='post-overlay-heart' />

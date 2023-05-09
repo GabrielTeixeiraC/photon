@@ -19,22 +19,19 @@ interface User {
   followed_by: {id: string}[];
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+  setDisplayCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplayExplore: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Sidebar({setDisplayCreate, setDisplayExplore}: SidebarProps) {
   async function handleClick() {
     await logout().catch((err) => {
       console.log(err);
       throw err;
     });
   }
-  async function changeDisplayCreate() {
-    let modal = document.querySelector('.modal-create') as HTMLElement;
-    modal.style.display = 'flex';
 
-  }
-  async function changeDisplayExplore() {
-    let modal = document.querySelector('.modal-explore') as HTMLElement;
-    modal.style.display = 'flex';
-  }
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -51,9 +48,6 @@ export default function Sidebar() {
     getUserData();
   }, []);
 
-
-  
-
   return (
     <div className="sidebar">
       <h1>
@@ -61,8 +55,8 @@ export default function Sidebar() {
       </h1>
       <div className="sidebar-list">
         <ListItem Icon={HomeOutlinedIcon} text="Home" link="/home" />
-        <ListItem Icon={SearchOutlinedIcon} text="Explore"onClick={changeDisplayExplore} link="/home" />
-        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={changeDisplayCreate} link='/home'/>
+        <ListItem Icon={SearchOutlinedIcon} text="Explore" onClick={() => {setDisplayExplore(true)}} link="/home" />
+        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={() => {setDisplayCreate(true)}} link='/home'/>
         <ListItem Icon={SendOutlinedIcon} text="Messages" link="/home" />
         <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link={`/profile/${user?.username}`} />
         <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />
