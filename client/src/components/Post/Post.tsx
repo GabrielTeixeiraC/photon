@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '../Atoms';
+import { getLoggedUser, toggleFollow } from '../../services/user';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,6 +14,8 @@ interface User {
   picture: {
     picture_url: string;
   }[]
+  following: string[];
+  followed_by: string[];
 }
 
 interface PostProps {
@@ -26,12 +30,34 @@ interface PostProps {
 export default function Post({post}: PostProps) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes.length);
+  const [loggedUser, setLoggedUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getLoggedUserData = async () => {
+      try {
+        const response = await getLoggedUser();
+        setLoggedUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    
+    getLoggedUserData();
+  }, []);
 
   function handleClick() {
     setLiked(!liked);
     liked ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
   }
 
+  const handleFollow = async () => {
+    try {
+      await toggleFollow(user!.id);
+    } catch (error) {
+      console.error('Error following user:', error);
+    }
+  };
+  
   return (
     <div className="post">
       <div className="post-header">
@@ -43,6 +69,9 @@ export default function Post({post}: PostProps) {
             {post.user.username}
           </Link>
         </h4>
+        {loggedUser && loggedUser.id !== post.user.id && 
+        <Button buttonText={(loggedUser.following.includes(post.user.id)) ? 'Unfollow' : 'Follow'} onClick={() => handleFollow()} />
+        }
       </div>
       <div className="post-image-container" onDoubleClick={handleClick}>
         <img className="post-photo" src={'../../../' + post.picture_url} alt={post.picture_url} />
