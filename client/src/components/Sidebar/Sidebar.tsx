@@ -8,6 +8,16 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import './Sidebar.css';
+import { useState, useEffect } from 'react';
+import { getLoggedUser } from '../../services/user';
+
+interface User {
+  name: string;
+  username: string;
+  email: string;
+  following: {id: string}[];
+  followed_by: {id: string}[];
+}
 
 export default function Sidebar() {
   async function handleClick() {
@@ -25,6 +35,24 @@ export default function Sidebar() {
     let modal = document.querySelector('.modal-explore') as HTMLElement;
     modal.style.display = 'flex';
   }
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await getLoggedUser();
+        setUser(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    getUserData();
+  }, []);
+
+
+  
 
   return (
     <div className="sidebar">
@@ -36,7 +64,7 @@ export default function Sidebar() {
         <ListItem Icon={SearchOutlinedIcon} text="Explore"onClick={changeDisplayExplore} link="/home" />
         <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={changeDisplayCreate} link='/home'/>
         <ListItem Icon={SendOutlinedIcon} text="Messages" link="/home" />
-        <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link="/me" />
+        <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link={`/profile/${user?.username}`} />
         <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />
       </div>
     </div>
