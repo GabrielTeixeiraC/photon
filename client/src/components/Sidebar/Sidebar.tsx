@@ -20,11 +20,13 @@ interface User {
 }
 
 interface SidebarProps {
+  displayCreate: boolean;
+  displayExplore: boolean;
   setDisplayCreate: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayExplore: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Sidebar({setDisplayCreate, setDisplayExplore}: SidebarProps) {
+export default function Sidebar({displayCreate, displayExplore, setDisplayCreate, setDisplayExplore}: SidebarProps) {
   async function handleClick() {
     await logout().catch((err) => {
       console.log(err);
@@ -54,8 +56,8 @@ export default function Sidebar({setDisplayCreate, setDisplayExplore}: SidebarPr
       </h1>
       <div className="sidebar-list">
         <ListItem Icon={HomeOutlinedIcon} text="Home" link="/home" />
-        <ListItem Icon={SearchOutlinedIcon} text="Explore" onClick={() => {setDisplayExplore(true)}} link="#"/>
-        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={() => {setDisplayCreate(true)}} link="#"/>
+        <ListItem Icon={SearchOutlinedIcon} text="Explore" onClick={(e) => {e.stopPropagation(); setDisplayCreate(false); setDisplayExplore(!displayExplore); } } link="#"/>
+        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={(e) => {e.stopPropagation(); setDisplayExplore(false); setDisplayCreate(!displayCreate); }} link="#"/>
         <ListItem Icon={SendOutlinedIcon} text="Messages" link="#" />
         <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link={`/profile/${user?.username}`} />
         <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />

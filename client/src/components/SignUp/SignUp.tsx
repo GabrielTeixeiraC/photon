@@ -42,7 +42,7 @@ export default function SignUp() {
       setFile(new File([], ''));
     }
 
-    await signup(name, username, email, password, file).catch((err) => {
+    await signup(name, username, email, password, file!).catch((err) => {
       setError(err);
       setLoading(false);
       throw err;

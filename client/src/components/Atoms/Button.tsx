@@ -10,7 +10,11 @@ const buttonStyle = {
   color: 'black',
   width: '12em',
   borderRadius: '2em',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
+  border: '1px solid #C8C9CF',
+  '&:hover': {
+    border: '1px solid #7a7a7a',
+  }
 };
 
 export function Button({ loading, buttonText} : ButtonProps) {

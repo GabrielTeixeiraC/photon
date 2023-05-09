@@ -1,15 +1,17 @@
 import {useState} from 'react';
 import { Button, Error, Input } from ".";
+import { uploadPicture } from '../../services/picture';
 import CloseIcon from '@mui/icons-material/Close';
 import CategoryIcon from '@mui/icons-material/Category';
-import { uploadPicture } from '../../services/picture';
+import './Modal.css';
 
 interface CreateModalProps {
+  displayCreate: boolean;
   setDisplayCreate: React.Dispatch<React.SetStateAction<boolean>>;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function CreateModal({setDisplayCreate, setRender}: CreateModalProps) {
+export function CreateModal({displayCreate, setDisplayCreate, setRender}: CreateModalProps) {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
   const [error, setError] = useState('');
@@ -40,17 +42,19 @@ export function CreateModal({setDisplayCreate, setRender}: CreateModalProps) {
   }
 
   return (
-    <div className='modal-create'>
+    <div className={displayCreate ? 'modal-open' : 'modal-closed'} onClick={e => e.stopPropagation()}>  
       <div className='modal-body'>
         <div className='modal-header'>
-          <CloseIcon onClick={() => {setDisplayCreate(false)}}></CloseIcon>
+          <h4> Upload a picture</h4>
+          <CloseIcon onClick={() => {setDisplayCreate(false); setError('');}} className='modal-close-icon'></CloseIcon>
         </div>
         <div className="modal-container">
-          <h4> Upload a picture</h4>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="modal-form">
             <Input type="text" placeholder="Category (Optional)" loading={loading} setValue={setCategory} value={category} Icon={CategoryIcon} />
             <input type="file" accept='.png, .jpg, .jpeg' onChange={(e) => {setFile(e.target.files![0]); setError('')}} />
-            {error && <Error error={error} />}
+            <div className='error-message-create'>
+              {error && <Error error={error} />}
+            </div>
             <Button loading={loading} buttonText='Upload' />
           </form>
         </div>

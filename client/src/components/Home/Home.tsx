@@ -32,16 +32,16 @@ export default function Home() {
   }
 
   return (
-    <div className="home">
-      <Sidebar setDisplayCreate={setDisplayCreate}  setDisplayExplore={setDisplayExplore} />
-      <div className="home-content">
+    <div className="home" onClick={() => {setDisplayCreate(false); setDisplayExplore(false)}}>
+      <Sidebar displayCreate={displayCreate} displayExplore={displayExplore} setDisplayCreate={setDisplayCreate} setDisplayExplore={setDisplayExplore} />
+      <div className="home-content" >
         <div className="home-header">
-          <SectionButton text='For You' link='/home' selected={selected} handleClick={handleClick} />
-          <SectionButton text='Following' link='/home' selected={selected} handleClick={handleClick} />
-          <SectionButton text='Filter' link='/home' selected={selected} handleClick={handleClick} />
+          <SectionButton text='For You' link='#' selected={selected} handleClick={handleClick} />
+          <SectionButton text='Following' link='#' selected={selected} handleClick={handleClick} />
+          <SectionButton text='Filter' link='#' selected={selected} handleClick={handleClick} />
         </div>
-        {displayCreate && <CreateModal setDisplayCreate={setDisplayCreate} setRender={setRender}/>}
-        {displayExplore && <ExploreModal setDisplayExplore={setDisplayExplore} />}
+        <CreateModal displayCreate={displayCreate} setDisplayCreate={setDisplayCreate} setRender={setRender} />
+        <ExploreModal displayExplore={displayExplore} setDisplayExplore={setDisplayExplore} />
 
         <div className="home-photos">
           {posts.map((post, index) => (

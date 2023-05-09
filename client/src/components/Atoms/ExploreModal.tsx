@@ -1,52 +1,63 @@
 import { useState } from 'react';
-import { Input } from ".";
+import { useNavigate } from 'react-router-dom';
+import { Input, Button, Error } from ".";
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
-import { getAllUsers } from '../../services/user';
+import { getUserByUsername } from '../../services/user';
+import './Modal.css';
 
 interface ExploreModalProps {
+  displayExplore: boolean;
   setDisplayExplore: React.Dispatch<React.SetStateAction<boolean>>;
 }
+interface User {
+  name: string;
+  username: string;
+  email: string;
+  following: { id: string }[];
+  followed_by: { id: string }[];
+}
 
-export function ExploreModal({ setDisplayExplore }: ExploreModalProps) {
-  interface User {
-    name: string;
-    username: string;
-    email: string;
-    following: { id: string }[];
-    followed_by: { id: string }[];
-  }
-  
+export function ExploreModal({ displayExplore, setDisplayExplore }: ExploreModalProps) {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState('');
   
-  async function getUsers() {
-    try {
-      const response = await getAllUsers();
-      const usernames = response.data.map((user: User) => user.username);
-      if (usernames.includes(search)) {
-        window.location.href = `/home`;
-      }
-      else {
-        window.alert('User not found');
-      }
-      setUser(usernames);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
+  const getUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!search) {
+      setError('Please enter a username');
+      return;
     }
-  }
+    setLoading(true);
+    try {
+      const response = await getUserByUsername(search);
+      setLoading(false);
+      navigate(`/profile/${response.data.username}`);
+    } catch (error) {
+      setLoading(false);
+      setError('User not found');
+    }
+  };
   
   return (
-    <div className='modal-explore'>
+    <div className={displayExplore ? 'modal-open' : 'modal-closed'} onClick={e => e.stopPropagation()}>
       <div className='modal-body'>
         <div className='modal-header'>
-          <CloseIcon onClick={() => {setDisplayExplore(false)}}></CloseIcon>  
-        </div>
-        <div className="modal-container-explore">
           <h4> Find a Profile</h4>
-          <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={SearchIcon} />
-          <button onClick={getUsers}>Search</button>
+          <CloseIcon onClick={() => {setDisplayExplore(false); setError('');}} className='modal-close-icon'></CloseIcon>  
+        </div>
+        <div className="modal-container">
+          <form onSubmit={getUser} className="modal-form">
+            <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={SearchIcon} />
+            <div className='error-message-explore'>
+              {error && <Error error={error} />}
+            </div>
+            <Button loading={loading} buttonText='Search' />
+          </form>
         </div>
       </div>
     </div>

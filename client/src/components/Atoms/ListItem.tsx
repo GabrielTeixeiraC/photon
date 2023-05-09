@@ -7,7 +7,7 @@ interface ListItemProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {muiName: string;}
   text: string;
   link: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
 export function ListItem({ Icon, text, link, onClick }: ListItemProps) {

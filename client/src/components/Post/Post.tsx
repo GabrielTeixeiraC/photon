@@ -67,4 +67,4 @@ export default function Post({post}: PostProps) {
       </div>
     </div>
   );
-}
+} 

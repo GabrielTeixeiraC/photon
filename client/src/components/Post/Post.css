@@ -102,6 +102,7 @@
 
 .post-heart-icon:hover {
   cursor: pointer;
+  color: #000000a9;
   transition: 0.2s;
 }
 

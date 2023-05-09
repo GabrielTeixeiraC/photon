@@ -59,7 +59,7 @@ export default function Profile() {
 
   return (
     <div className="profile-page">
-      <Sidebar setDisplayCreate={setDisplayCreate}  setDisplayExplore={setDisplayExplore} />
+      <Sidebar displayCreate={displayCreate} displayExplore={displayExplore} setDisplayCreate={setDisplayCreate}  setDisplayExplore={setDisplayExplore} />
       <div className="profile-content">
         <div className="profile">
           <div className="profile-header">
@@ -78,8 +78,8 @@ export default function Profile() {
               </div>
             )}
           </div>
-          {displayCreate && <CreateModal setDisplayCreate={setDisplayCreate} setRender={setRender} />}
-          {displayExplore && <ExploreModal setDisplayExplore={setDisplayExplore} />}
+          <CreateModal displayCreate={displayCreate} setDisplayCreate={setDisplayCreate} setRender={setRender} />
+          <ExploreModal displayExplore={displayExplore} setDisplayExplore={setDisplayExplore} />
           <div className="profile-posts">
             {posts.map((post, index) => (
               <ProfilePost post={post} key={index} />

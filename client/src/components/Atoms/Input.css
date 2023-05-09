@@ -20,6 +20,6 @@
 }
 
 .input-text:focus{
-  transition: 0.75s;
-  border-bottom: 1px solid #7680d8;
+  transition: 0.5s;
+  border-bottom: 1px solid #7a7a7a;
 } 
