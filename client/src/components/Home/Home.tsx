@@ -2,39 +2,33 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import Post from '../Post/Post';
 import { CreateModal, ExploreModal, SectionButton } from '../Atoms';
-import { getForYouPictures } from '../../services/picture';
+import { getSelectedPictures } from '../../services/picture';
 import './Home.css';
 
 export default function Home() {
   const [selected, setSelected] = useState('For You');
   const [displayCreate, setDisplayCreate] = useState(false);
   const [displayExplore, setDisplayExplore] = useState(false);
+  const [tag, setTags] = useState('');
   const [posts, setPosts] = useState([]);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
-    const getPictures = async (selected: string) => {
+    const getPictures = async (selected: string, tag: string) => {
       try {
-        if (selected === 'For You') {
-          getForYouPictures().then((res) => {
-            setPosts(res.data);
-          });
-        } else if (selected === 'Following') {
-          // getFollowingPictures().then((res) => {
-          //   setPosts(res.data);
-          // });
-        } else {
-          // getFilteredPictures().then((res) => {
-          //   setPosts(res.data);
-          // });
-        }
-        console.log(posts);
+        const results = getSelectedPictures(selected, tag).then((res) => {
+          setPosts(res.data);
+          console.log(res.data);
+        });
+        console.log(render);
+        setRender(false);
       } catch (error) {
         console.error('Error fetching pictures:', error);
       }
     };
 
-    getPictures(selected);
-  }, [selected, posts]);
+    getPictures(selected, tag);
+  }, [selected, render]);
 
   function handleClick(text: string) {
     setSelected(text);
@@ -49,7 +43,7 @@ export default function Home() {
           <SectionButton text='Following' link='/home' selected={selected} handleClick={handleClick} />
           <SectionButton text='Filter' link='/home' selected={selected} handleClick={handleClick} />
         </div>
-        {displayCreate && <CreateModal setDisplayCreate={setDisplayCreate} />}
+        {displayCreate && <CreateModal setDisplayCreate={setDisplayCreate} setRender={setRender}/>}
         {displayExplore && <ExploreModal setDisplayExplore={setDisplayExplore} />}
 
         <div className="home-photos">

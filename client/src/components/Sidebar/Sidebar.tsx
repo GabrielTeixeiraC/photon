@@ -55,9 +55,9 @@ export default function Sidebar({setDisplayCreate, setDisplayExplore}: SidebarPr
       </h1>
       <div className="sidebar-list">
         <ListItem Icon={HomeOutlinedIcon} text="Home" link="/home" />
-        <ListItem Icon={SearchOutlinedIcon} text="Explore" onClick={() => {setDisplayExplore(true)}} link="/home" />
-        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={() => {setDisplayCreate(true)}} link='/home'/>
-        <ListItem Icon={SendOutlinedIcon} text="Messages" link="/home" />
+        <ListItem Icon={SearchOutlinedIcon} text="Explore" onClick={() => {setDisplayExplore(true)}} link="#"/>
+        <ListItem Icon={AddAPhotoOutlinedIcon} text="Create" onClick={() => {setDisplayCreate(true)}} link="#"/>
+        <ListItem Icon={SendOutlinedIcon} text="Messages" link="#" />
         <ListItem Icon={AccountCircleOutlinedIcon} text="Profile" link={`/profile/${user?.username}`} />
         <ListItem onClick={handleClick} Icon={LogoutOutlinedIcon} text="Logout" link="/" />
       </div>

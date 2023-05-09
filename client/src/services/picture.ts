@@ -20,9 +20,16 @@ export const uploadPicture = async (file: File, category: string) => {
   return response;
 }
 
-export const getForYouPictures = async () => {
+export const getSelectedPictures = async (selected: string, tag: string) => {
   try {
-    const response = await api.get('/pictures/top');
+    let response;
+    if (selected === 'For You') {
+      response = await api.get('/pictures/top');
+    } else if (selected === 'Following') {
+      response = await api.get('/pictures/following');
+    } else {
+      response = await api.get('/pictures/tag/' + selected);
+    }
     return response;
   }
   catch (error) {

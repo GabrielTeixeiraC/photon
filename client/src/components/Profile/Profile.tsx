@@ -1,5 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
-import { ProfilePost } from "../Atoms";
+import { CreateModal, ExploreModal, ProfilePost } from "../Atoms";
 import { useState, useEffect } from "react";
 import { getLoggedUser } from "../../services/user";
 import "./Profile.css";
@@ -14,6 +14,10 @@ interface User {
 
 export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
+  const [displayCreate, setDisplayCreate] = useState(false);
+  const [displayExplore, setDisplayExplore] = useState(false);
+  const [render, setRender] = useState(false);
+
 
   useEffect(() => {
     const getUserData = async () => {
@@ -45,7 +49,7 @@ export default function Profile() {
 
   return (
     <div className="profile-page">
-      <Sidebar />
+      <Sidebar setDisplayCreate={setDisplayCreate}  setDisplayExplore={setDisplayExplore} />
       <div className="profile-content">
         <div className="profile">
           <div className="profile-header">
@@ -64,6 +68,8 @@ export default function Profile() {
               </div>
             )}
           </div>
+          {displayCreate && <CreateModal setDisplayCreate={setDisplayCreate} setRender={setRender} />}
+          {displayExplore && <ExploreModal setDisplayExplore={setDisplayExplore} />}
           <div className="profile-posts">
             {posts.map((post, index) => (
               <ProfilePost post={post} key={index} />

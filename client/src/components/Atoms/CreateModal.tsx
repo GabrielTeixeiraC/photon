@@ -6,9 +6,10 @@ import { uploadPicture } from '../../services/picture';
 
 interface CreateModalProps {
   setDisplayCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function CreateModal({setDisplayCreate}: CreateModalProps) {
+export function CreateModal({setDisplayCreate, setRender}: CreateModalProps) {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
   const [error, setError] = useState('');
@@ -32,6 +33,7 @@ export function CreateModal({setDisplayCreate}: CreateModalProps) {
       console.error('Error uploading picture:', error);
       setError('Error uploading picture');
     } finally {
+      setRender(true);
       setFile(null);
       setLoading(false);
     }
