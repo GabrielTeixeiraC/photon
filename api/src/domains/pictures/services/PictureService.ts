@@ -165,7 +165,7 @@ class PictureServiceClass {
         return pictures;
     }
 
-    async getPicturesByUser(userId: string) {
+    async getPicturesByUserID(userId: string) {
         const pictures = await prisma.picture.findMany({
             where: {
                 user_id: userId,
@@ -173,7 +173,13 @@ class PictureServiceClass {
             },
             select: {
                 id: true,
-            },
+                user_id: true,
+                picture_url: true,
+                profile_picture: true,
+                likes: true,
+                tags: true,
+                created_at: true,
+            }
         });
         if(!pictures) {
             throw new QueryError('No pictures found');

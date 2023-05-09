@@ -22,6 +22,12 @@ async function run() {
         email: 'lima@gmail.com',
         username: 'gabriellimab',
         password: firstPassword,
+        picture: {
+          create: {
+            picture_url: 'default.png',
+            profile_picture: true,
+          },
+        }
       }
     }),
 
@@ -32,6 +38,12 @@ async function run() {
         email: 'teixeira@gmail.com',
         username: 'gteixeirac',
         password: secondPassword,
+        picture: {
+          create: {
+            picture_url: 'default.png',
+            profile_picture: true,
+          },
+        }
       }
     })
   ]);

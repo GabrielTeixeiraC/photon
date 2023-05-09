@@ -79,23 +79,24 @@ router.get('/:id',
     }
 );
 
-router.get('/user/:id',
+
+router.post('/tag/',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.getPicturesByUser(req.params.id);
+            const tag = req.body.tag;
+            const picture = await PictureService.getPicturesByTag(tag);
             res.status(statusCodes.SUCCESS).json(picture);
         } catch (error) {
             next(error);
         }
     }
 );
-
-router.get('/tag/:tag',
+router.get('/user/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.getPicturesByTag(req.params.tag);
+            const picture = await PictureService.getPicturesByUserID(req.params.id);
             res.status(statusCodes.SUCCESS).json(picture);
         } catch (error) {
             next(error);

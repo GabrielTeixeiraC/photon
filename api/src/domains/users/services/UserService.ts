@@ -113,6 +113,46 @@ class UserServiceClass {
     return user;
   }
 
+  async getUserByUsername(username: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        username: true,
+        followed_by: {select:{
+          id: true,
+          },
+        },
+        following: {select:{
+          id: true,
+          },
+        },
+        picture: {
+          where: {
+            profile_picture: true,
+          },
+          select: {
+            id: true,
+            picture_url: true,
+          },
+        },
+        created_at: true,
+      },
+    });
+
+    if (!user) {
+      throw new QueryError('User not found');
+    }
+
+    return user;
+  }
+
+
+
   async editUser(id: string, body: Partial<Omit<User, 'id'>> ){
     const userData = body;
 
