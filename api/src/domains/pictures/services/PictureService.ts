@@ -103,7 +103,7 @@ class PictureServiceClass {
             orderBy: {
                 likes: {
                     _count: 'desc',
-                },
+                }
             },
             select: {
                 id: true,
@@ -132,13 +132,31 @@ class PictureServiceClass {
             where: {
                 tags: {
                     some: {
-                        id: tag,
+                        name: tag,
                     },
                 },
+                profile_picture: false,
+            },
+            orderBy: {
+                created_at: 'desc',
             },
             select: {
                 id: true,
-            },
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        picture: {
+                            where: {
+                                profile_picture: true,
+                            },
+                        }
+                    },
+                },
+                likes: true,
+                tags: true,
+                picture_url: true,
+            }
         });
         if(!pictures) {
             throw new QueryError('No pictures found');
@@ -174,15 +192,34 @@ class PictureServiceClass {
                         },
                     },
                 },
+                profile_picture: false,
+            },
+            orderBy: {
+                created_at: 'desc',
             },
             select: {
                 id: true,
-            },
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        picture: {
+                            where: {
+                                profile_picture: true,
+                            },
+                        }
+                    },
+                },
+                likes: true,
+                tags: true,
+                picture_url: true,
+            }
         });
+        
         if(!pictures) {
             throw new QueryError('No pictures found');
         }
-
+        
         return pictures;
     }
 }

@@ -91,11 +91,11 @@ router.get('/user/:id',
     }
 );
 
-router.get('/tag/:id',
+router.get('/tag/:tag',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.getPicturesByTag(req.params.id);
+            const picture = await PictureService.getPicturesByTag(req.params.tag);
             res.status(statusCodes.SUCCESS).json(picture);
         } catch (error) {
             next(error);
