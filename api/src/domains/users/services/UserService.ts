@@ -10,7 +10,7 @@ class UserServiceClass {
     return encryptedPassword;
   }
 
-  async create(body: User) {
+  async create(body: User, file: any) {
     const userEmail = await prisma.user.findFirst({
       where: {
         email: body.email,
@@ -38,6 +38,12 @@ class UserServiceClass {
         username: body.username,
         email: body.email,
         password: encryptedPassword,
+        picture: {
+          create: {
+            picture_url: file? file.filename: 'default.png',
+            profile_picture: true,
+          },
+        }
       },
     });
 

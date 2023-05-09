@@ -5,7 +5,7 @@ import { Express, Request } from 'express';
 import { MediaTypeError } from '../../errors/MediaTypeError';
 
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../../../client/src/uploads'),
+    destination: path.join(__dirname, '../../../client/public'),
     filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
         const extension = path.extname(file.originalname);
         let filename = Date.now() + extension;

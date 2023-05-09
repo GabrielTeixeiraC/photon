@@ -4,6 +4,7 @@ import { loginMiddleware,
   verifyJWT,
   notLoggedIn } from '../../../middlewares/auth';
 import { statusCodes } from '../../../../utils/constants/status-codes';
+import { upload } from '../../../middlewares/multer';
   
 export const router = Router();
 
@@ -22,10 +23,11 @@ router.post('/logout',
 );
     
 
-router.post('/', 
+router.post('/',
+  upload,
   async (req: Request, res: Response, next: NextFunction) => {
     try {     
-      await UserService.create(req.body);
+      await UserService.create(req.body, req.file);
       res.status(statusCodes.CREATED).end();
     } catch (error) {
       next(error);

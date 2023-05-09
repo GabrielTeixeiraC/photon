@@ -1,7 +1,5 @@
 import { prisma } from "../../../lib/prisma"
 import { QueryError } from '../../../../errors/QueryError';
-import { PermissionError } from "../../../../errors/PermissionError";
-
 
 class PictureServiceClass {
     async uploadPicture(userId:string, file: any, profile: boolean = false) {
@@ -100,6 +98,7 @@ class PictureServiceClass {
                 created_at: {
                     gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
                 },
+                profile_picture: false,
             },
             orderBy: {
                 likes: {
@@ -108,7 +107,21 @@ class PictureServiceClass {
             },
             select: {
                 id: true,
-            },
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        picture: {
+                            where: {
+                                profile_picture: true,
+                            },
+                        }
+                    },
+                },
+                likes: true,
+                tags: true,
+                picture_url: true,
+            }
         });
 
         return pictures;
@@ -139,6 +152,28 @@ class PictureServiceClass {
             where: {
                 user_id: userId,
                 profile_picture: false,
+            },
+            select: {
+                id: true,
+            },
+        });
+        if(!pictures) {
+            throw new QueryError('No pictures found');
+        }
+
+        return pictures;
+    }
+
+    async getFollowingPictures(userId: string) {
+        const pictures = await prisma.picture.findMany({
+            where: {
+                user: {
+                    followed_by: {
+                        some: {
+                            id: userId,
+                        },
+                    },
+                },
             },
             select: {
                 id: true,

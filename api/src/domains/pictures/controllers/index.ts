@@ -55,6 +55,18 @@ router.get('/top',
     }
 );
 
+router.get('/following',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const pictures = await PictureService.getFollowingPictures(req.userId!);
+            res.status(statusCodes.SUCCESS).json(pictures);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 router.get('/:id',
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
