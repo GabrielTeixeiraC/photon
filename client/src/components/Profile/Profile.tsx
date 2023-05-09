@@ -1,15 +1,22 @@
 import Sidebar from "../Sidebar/Sidebar";
 import { CreateModal, ExploreModal, ProfilePost } from "../Atoms";
 import { useState, useEffect } from "react";
-import { getLoggedUser } from "../../services/user";
+import { useParams } from "react-router-dom";
+import { getUserByUsername } from "../../services/user";
+import { getPicturesByUserID } from "../../services/picture";
 import "./Profile.css";
 
 interface User {
+  id: string;
   name: string;
   username: string;
   email: string;
   following: {id: string}[];
   followed_by: {id: string}[];
+  picture: {
+    id: string;
+    picture_url: string;
+  }[]
 }
 
 export default function Profile() {
@@ -17,12 +24,15 @@ export default function Profile() {
   const [displayCreate, setDisplayCreate] = useState(false);
   const [displayExplore, setDisplayExplore] = useState(false);
   const [render, setRender] = useState(false);
+  const [posts, setPosts] = useState([]);
 
+  const { username } = useParams();
 
   useEffect(() => {
+    if (!username) return;
     const getUserData = async () => {
       try {
-        const response = await getLoggedUser();
+        const response = await getUserByUsername(username);
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -30,22 +40,22 @@ export default function Profile() {
     };
 
     getUserData();
-  }, []);
+  }, [username]);
 
-  // mock posts
-  const posts = [
-    { src: "https://picsum.photos/1000", alt: "Post1", likes: "11" },
-    { src: "https://picsum.photos/1001", alt: "Post2", likes: "4" },
-    { src: "https://picsum.photos/1002", alt: "Post3", likes: "7" },
-    { src: "https://picsum.photos/1003", alt: "Post4", likes: "11" },
-    { src: "https://picsum.photos/1004", alt: "Post5", likes: "4" },
-    { src: "https://picsum.photos/1005", alt: "Post6", likes: "7" },
-    { src: "https://picsum.photos/1006", alt: "Post7", likes: "11" },
-    { src: "https://picsum.photos/1007", alt: "Post8", likes: "4" },
-    { src: "https://picsum.photos/1008", alt: "Post9", likes: "7" },
-    { src: "https://picsum.photos/1009", alt: "Post10", likes: "11" },
-    { src: "https://picsum.photos/1011", alt: "Post11", likes: "4" },
-  ];
+  useEffect(() => {
+    if (!user) return;
+    const getPosts = async () => {
+      try {
+        const response = await getPicturesByUserID(user.id);
+        setPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getPosts();
+  }, [render, user]);
+
 
   return (
     <div className="profile-page">
@@ -53,17 +63,17 @@ export default function Profile() {
       <div className="profile-content">
         <div className="profile">
           <div className="profile-header">
-            <img src="https://picsum.photos/200" alt="profile" className="profile-avatar" />
+            <img src={'../../../' + user?.picture[0].picture_url} alt="profile" className="profile-avatar" />
             {user && (
               <div className="profile-header-info">
                 <div className="profile-names">
-                  <h3>{user?.name}</h3>
-                  <h3>@{user?.username}</h3>
+                  <h3>{user.name}</h3>
+                  <h3>@{user.username}</h3>
                 </div>
                 <div className="profile-numbers">
                   <h4>Posts: {posts.length}</h4>
-                  <h4>Following: {user?.following.length}</h4>
-                  <h4>Followers: {user?.followed_by.length}</h4>
+                  <h4>Following: {user.following.length}</h4>
+                  <h4>Followers: {user.followed_by.length}</h4>
                 </div>
               </div>
             )}

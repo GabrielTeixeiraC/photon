@@ -16,11 +16,8 @@ export default function Home() {
   useEffect(() => {
     const getPictures = async (selected: string, tag: string) => {
       try {
-        const results = getSelectedPictures(selected, tag).then((res) => {
-          setPosts(res.data);
-          console.log(res.data);
-        });
-        console.log(render);
+        const response = await getSelectedPictures(selected, tag);
+        setPosts(response.data);
         setRender(false);
       } catch (error) {
         console.error('Error fetching pictures:', error);

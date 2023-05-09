@@ -40,7 +40,9 @@ export function ExploreModal({ setDisplayExplore }: ExploreModalProps) {
   return (
     <div className='modal-explore'>
       <div className='modal-body'>
-        <div className='modal-header'><CloseIcon></CloseIcon></div>
+        <div className='modal-header'>
+          <CloseIcon onClick={() => {setDisplayExplore(false)}}></CloseIcon>  
+        </div>
         <div className="modal-container-explore">
           <h4> Find a Profile</h4>
           <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={SearchIcon} />

@@ -35,11 +35,11 @@ export default function Post({post}: PostProps) {
   return (
     <div className="post">
       <div className="post-header">
-        <Link to={'/' + post.user.username}>
+        <Link to={'/profile/' + post.user.username}>
           <img src={'../../../' + post.user.picture[0].picture_url} alt="user" />
         </Link>
         <h4>
-          <Link to={'/' + post.user.username}>
+          <Link to={'/profile/' + post.user.username}>
             {post.user.username}
           </Link>
         </h4>

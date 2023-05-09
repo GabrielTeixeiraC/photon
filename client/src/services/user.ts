@@ -10,6 +10,17 @@ export const getLoggedUser = async () => {
     throw error;
   }
 };
+
+export const getUserByUsername = async (username: string) => {
+  try {
+    const response = await api.get('/users/username/' + username);
+    return response;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};
+
 export const getAllUsers = async () => {
   try {
     const response = await api.get('/users/');

@@ -39,7 +39,6 @@ export default function Sidebar({setDisplayCreate, setDisplayExplore}: SidebarPr
       try {
         const response = await getLoggedUser();
         setUser(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }

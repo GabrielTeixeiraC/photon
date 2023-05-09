@@ -33,8 +33,7 @@ function AllRoutes() {
   return (
     <Routes>
       <Route path="/home" element={<Home />} />
-
-      <Route path={`/profile/${user?.username}`} element={<Profile />} />
+      <Route path={"/profile/:username"} element={<Profile />} />
       <Route path="/signup" element={<SignUp />} />
       <Route index element={<Login />} />
       <Route index element={<Login />} />
