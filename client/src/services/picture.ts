@@ -1,10 +1,10 @@
 import api from './api';
 import { AxiosError } from 'axios';
 
-export const uploadPicture = async (file: File, category: string) => {
+export const uploadPicture = async (file: File, tag: string) => {
   const formData = new FormData();
   formData.append('picture', file);
-  formData.append('category', category);
+  formData.append('tag', tag);
 
   const response = await api.post('/pictures/', formData, {
     headers: {
@@ -27,9 +27,10 @@ export const getSelectedPictures = async (selected: string, tag: string) => {
       response = await api.get('/pictures/following');
     } else if (selected === 'Filter') {
       response = await api.post('/pictures/tag/', { tag });
-    } else if (selected === 'Top' || response === undefined) {
+    } else if (selected === 'For You' || response === undefined) {
       response = await api.get('/pictures/top');
     }
+    
     return response;
   }
   catch (error) {

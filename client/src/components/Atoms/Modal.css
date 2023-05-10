@@ -94,3 +94,12 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.error-message-filter {
+  position: absolute;
+  height: 65px;
+  width: 100%;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}

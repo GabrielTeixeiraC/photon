@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import api from './api';
 
 export const getLoggedUser = async () => {

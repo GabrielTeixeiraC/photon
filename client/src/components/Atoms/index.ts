@@ -6,3 +6,4 @@ export * from './SectionButton';
 export * from './ProfilePost';
 export * from './CreateModal';
 export * from './ExploreModal';
+export * from './FilterModal';

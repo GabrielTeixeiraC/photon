@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input, Button, Error } from ".";
-import SearchIcon from '@mui/icons-material/Search';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import { getUserByUsername } from '../../services/user';
 import './Modal.css';
@@ -9,13 +9,6 @@ import './Modal.css';
 interface ExploreModalProps {
   displayExplore: boolean;
   setDisplayExplore: React.Dispatch<React.SetStateAction<boolean>>;
-}
-interface User {
-  name: string;
-  username: string;
-  email: string;
-  following: { id: string }[];
-  followed_by: { id: string }[];
 }
 
 export function ExploreModal({ displayExplore, setDisplayExplore }: ExploreModalProps) {
@@ -52,7 +45,7 @@ export function ExploreModal({ displayExplore, setDisplayExplore }: ExploreModal
         </div>
         <div className="modal-container">
           <form onSubmit={getUser} className="modal-form">
-            <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={SearchIcon} />
+            <Input type="text" placeholder="Search" loading={loading} setValue={setSearch} value={search} Icon={BadgeOutlinedIcon} />
             <div className='error-message-explore'>
               {error && <Error error={error} />}
             </div>
