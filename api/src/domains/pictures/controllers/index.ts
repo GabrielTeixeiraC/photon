@@ -18,7 +18,8 @@ router.post('/',
         } catch (error) {
             next(error);
         }
-});
+    }
+);
 
 router.post('/profile',
     verifyJWT,
@@ -30,18 +31,20 @@ router.post('/profile',
         } catch (error) {
             next(error);
         }
-});
+    }
+);
 
 router.put('/likes/:id', 
     verifyJWT,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.likePicture(req.userId!,req.params.id);
-            res.status(statusCodes.SUCCESS).json(picture);
+            await PictureService.toggleLike(req.userId!,req.params.id);
+            res.status(statusCodes.SUCCESS).end();
         } catch (error) {
             next(error);
         }
-    });
+    }
+);
 
 router.get('/top',
     verifyJWT,

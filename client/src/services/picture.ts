@@ -49,3 +49,11 @@ export const getPicturesByUserID = async (id: string) => {
   }
 }
 
+export const toggleLike = async (pictureId: string) => {
+  try {
+    api.put('/pictures/likes/' + pictureId);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}

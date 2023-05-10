@@ -50,46 +50,40 @@ class PictureServiceClass {
         return picture;
     }
 
-    async likePicture(userId: string ,id: string) {
-        const picture = await prisma.picture.findUnique({
-            where: {
-                id: id,
-            },
-        });
+    async toggleLike(userId: string, id: string) {
+        const picture = await this.getPicture(id);
 
         if (!picture) {
             throw new QueryError('Picture not found');
         }
 
-        const alreadyLiked = await prisma.picture.findFirst({
-            where: {
-                id: id,
-                likes: {
-                    some: {
-                        id: userId,
+        if (picture.likes.some((like) => like.id === userId)) {
+            await prisma.picture.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    likes: {
+                        disconnect: {
+                            id: userId,
+                        },
                     },
                 },
-            },
-        });
-
-        if (alreadyLiked) {
-            throw new QueryError('User already liked');
-          }
-
-        const likedPicture = await prisma.picture.update({
-            where: {
-                id: id,
-            },
-            data: {
-                likes: {
-                    connect: {
-                        id: userId,
+            });
+        } else {
+            await prisma.picture.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    likes: {
+                        connect: {
+                            id: userId,
+                        },
                     },
                 },
-            },
-        });
-
-        return likedPicture;
+            });
+        }
     }
 
     async getTopPictures() {

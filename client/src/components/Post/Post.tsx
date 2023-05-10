@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../Atoms';
 import { getLoggedUser, toggleFollow } from '../../services/user';
+import { toggleLike } from '../../services/picture';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -20,17 +21,17 @@ interface User {
 
 interface PostProps {
   post: {
+    id: string;
     user: User;
     picture_url: string;
     tags: string[];
-    likes: string[];
+    likes: {id: string}[];
   },
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Post({post, setRender}: PostProps) {
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes.length);
+  const [firstRender, setFirstRender] = useState(true);
   const [loggedUser, setLoggedUser] = useState<User | null>(null);
   const [renderFollowers, setRenderFollowers] = useState(false);
 
@@ -48,9 +49,15 @@ export default function Post({post, setRender}: PostProps) {
     getLoggedUserData();
   }, [renderFollowers]);
 
-  function handleClick() {
-    setLiked(!liked);
-    liked ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
+  async function handleLike() {
+    try {
+      await toggleLike(post.id);
+      setFirstRender(false);
+      setRender(true);
+    }
+    catch (error) {
+      console.error('Error liking post:', error);
+    }
   }
 
   const handleFollow = async (id: string) => {
@@ -82,25 +89,25 @@ export default function Post({post, setRender}: PostProps) {
           }
         </div>
       </div>
-      <div className="post-image-container" onDoubleClick={handleClick}>
+      <div className="post-image-container" onDoubleClick={handleLike}>
         <img className="post-photo" src={'../../../' + post.picture_url} alt={post.picture_url} />
-        {liked &&
+        { !firstRender && post.likes.some((like) => like.id === loggedUser?.id) &&
         <div className="post-overlay">
           <FavoriteIcon sx={{ fontSize: "8em", color: "white" }} className='post-overlay-heart' />
         </div>}
       </div>
       <div className="post-footer">
         <div className="post-footer-left">
-          {liked ? (
-            <FavoriteOutlinedIcon onClick={handleClick} sx={{ fontSize: "2.2rem", fill: "red"}} className='post-heart-icon' />
+          {post.likes.some((like) => like.id === loggedUser?.id) ? (
+            <FavoriteOutlinedIcon onClick={handleLike} sx={{ fontSize: "2.2rem", fill: "red"}} className='post-heart-icon' />
           ) : (
-            <FavoriteBorderOutlinedIcon onClick={handleClick} sx={{fontSize: "2.2rem"}} className='post-heart-icon' />
+            <FavoriteBorderOutlinedIcon onClick={handleLike} sx={{fontSize: "2.2rem"}} className='post-heart-icon' />
           )}
           
           <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "2.2rem" }} className='post-footer-icon' />
         </div>
         <div className="post-footer-right">
-          <h3>{likeCount} likes</h3>
+          <h3>{post.likes.length} likes</h3>
         </div>
       </div>
     </div>
