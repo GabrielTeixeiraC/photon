@@ -86,7 +86,7 @@ export default function Profile() {
 
   return (
     <div className="profile-page">
-      <Sidebar displayCreate={displayCreate} displayExplore={displayExplore} setDisplayCreate={setDisplayCreate}  setDisplayExplore={setDisplayExplore} />
+      <Sidebar displayCreate={displayCreate} displayExplore={displayExplore} setDisplayCreate={setDisplayCreate} setDisplayExplore={setDisplayExplore} setDisplayFilter={() => {}} />
       <div className="profile-content">
         <div className="profile">
           <div className="profile-header">
