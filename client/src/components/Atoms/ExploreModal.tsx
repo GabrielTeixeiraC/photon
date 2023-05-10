@@ -29,6 +29,7 @@ export function ExploreModal({ displayExplore, setDisplayExplore }: ExploreModal
     try {
       const response = await getUserByUsername(search);
       setLoading(false);
+      setDisplayExplore(false);
       navigate(`/profile/${response.data.username}`);
     } catch (error) {
       setLoading(false);
