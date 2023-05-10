@@ -13,20 +13,7 @@ router.post('/',
     upload, 
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const picture = await PictureService.uploadPicture(req.userId!,req.file);
-            res.status(statusCodes.CREATED).json(picture);
-        } catch (error) {
-            next(error);
-        }
-    }
-);
-
-router.post('/profile',
-    verifyJWT,
-    upload,
-    async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const picture = await PictureService.uploadPicture(req.userId!,req.file, true);
+            const picture = await PictureService.uploadPicture(req.userId!, req.file, req.body.tag);
             res.status(statusCodes.CREATED).json(picture);
         } catch (error) {
             next(error);
@@ -87,8 +74,8 @@ router.post('/tag/',
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const tag = req.body.tag;
-            const picture = await PictureService.getPicturesByTag(tag);
-            res.status(statusCodes.SUCCESS).json(picture);
+            const pictures = await PictureService.getPicturesByTag(tag);
+            res.status(statusCodes.SUCCESS).json(pictures);
         } catch (error) {
             next(error);
         }

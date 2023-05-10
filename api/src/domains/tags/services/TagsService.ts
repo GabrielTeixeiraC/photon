@@ -113,6 +113,29 @@ class TagServiceClass {
             throw error;
         }
     }
+
+    async getTag(tag: string) {
+        const existingTag = await prisma.tag.findUnique({
+            where: {
+                name: tag,
+            },
+            select: {
+                id: true,
+                name: true,
+                pictures: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+        
+        if (!existingTag) {
+            throw new QueryError("Tag not found");
+        }
+
+        return existingTag;
+    }
 }
 
 export const TagService = new TagServiceClass();

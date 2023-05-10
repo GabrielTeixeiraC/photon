@@ -33,4 +33,16 @@ router.get('/',
     }
 );
 
+router.get('/:tag',
+    verifyJWT,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const tags = await TagService.getTag(req.params.tag);
+            res.status(statusCodes.SUCCESS).json(tags);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 

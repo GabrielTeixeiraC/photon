@@ -2,8 +2,24 @@ import { prisma } from "../../../lib/prisma"
 import { QueryError } from '../../../../errors/QueryError';
 
 class PictureServiceClass {
-    async uploadPicture(userId:string, file: any, profile: boolean = false) {
-        const picture = await prisma.picture.create({
+    async uploadPicture(userId:string, file: any, tag: string) {
+        const pictureTag = await prisma.tag.findUnique({
+            where: {
+                name: tag,
+            },
+        });
+
+        if (!pictureTag) {
+            console.log('Created');
+            await prisma.tag.create({
+                data: {
+                    name: tag,
+                },
+            });
+        }
+
+
+        await prisma.picture.create({
             data: {
                 picture_url: file.filename,
                 user: {
@@ -11,10 +27,13 @@ class PictureServiceClass {
                         id: userId,
                     },
                 },
-                profile_picture: profile,
+                tags: {
+                    connect: {
+                        name: tag,
+                    },
+                },
             },
         });
-        return picture;
     }
 
     async getPicture(id: string) {
@@ -122,39 +141,72 @@ class PictureServiceClass {
     }
 
     async getPicturesByTag(tag: string) {
-        const pictures = await prisma.picture.findMany({
-            where: {
-                tags: {
-                    some: {
-                        name: tag,
+        let pictures;
+        if (tag === '') {
+            pictures = await prisma.picture.findMany({
+                where: {
+                    profile_picture: false,
+                    tags: {
+                        none: {},
                     },
                 },
-                profile_picture: false,
-            },
-            orderBy: {
-                created_at: 'desc',
-            },
-            select: {
-                id: true,
-                user: {
-                    select: {
-                        id: true,
-                        username: true,
-                        picture: {
-                            where: {
-                                profile_picture: true,
-                            },
+
+                select: {
+                    id: true,
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            picture: {
+                                where: {
+                                    profile_picture: true,
+                                },
+                            }
+                        },
+                    },
+                    likes: {
+                        select: {
+                            id: true,
                         }
                     },
+                    tags: true,
+                    picture_url: true,
                 },
-                likes: true,
-                tags: true,
-                picture_url: true,
-            }
-        });
-        if(!pictures) {
-            throw new QueryError('No pictures found');
-        }
+            });
+
+        } else {
+            pictures = await prisma.picture.findMany({
+                where: {
+                    profile_picture: false,
+                    tags: {
+                        some: {
+                            name: tag,
+                        },
+                    },
+                },
+                select: {
+                    id: true,
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            picture: {
+                                where: {
+                                    profile_picture: true,
+                                },
+                            }
+                        },
+                    },
+                    likes: {
+                        select: {
+                            id: true,
+                        }
+                    },
+                    tags: true,
+                    picture_url: true,
+                },
+            });
+        }   
 
         return pictures;
     }
@@ -171,13 +223,45 @@ class PictureServiceClass {
                 picture_url: true,
                 profile_picture: true,
                 likes: true,
-                tags: true,
+                tags: true, 
                 created_at: true,
             }
         });
         if(!pictures) {
             throw new QueryError('No pictures found');
         }
+
+        return pictures;
+    }
+
+    async getAllPictures() {
+        const pictures = await prisma.picture.findMany({
+            where: {
+                profile_picture: false,
+            },
+
+            select: {
+                id: true,
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        picture: {
+                            where: {
+                                profile_picture: true,
+                            },
+                        },
+                    },
+                },
+                likes: {
+                    select: {
+                        id: true,
+                    }
+                },
+                tags: true,
+                picture_url: true,
+            },
+        });
 
         return pictures;
     }
