@@ -8,24 +8,32 @@
 .post-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 10%;
+}
+
+.post-header-left {
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   width: 100%;
   height: 12%;
 
 }
 
-.post-header a {
+.post-header-left a {
   height: 40px;
   color: #000000;
   text-decoration: none;
 }
 
-.post-header a:hover {
+.post-header-left a:hover {
   color: #000000a9;
   transition: 0.2s;
 }
 
-.post-header img {
+.post-header-left img {
   width: 40px;
   height: 40px;
   border-radius: 50%;

@@ -24,17 +24,12 @@ export const getSelectedPictures = async (selected: string, tag: string) => {
   try {
     let response;
     if (selected === 'Following') {
-      response = await api.get('/pictures/top');
+      response = await api.get('/pictures/following');
     } else if (selected === 'Filter') {
       response = await api.post('/pictures/tag/', { tag });
     } else if (selected === 'Top' || response === undefined) {
       response = await api.get('/pictures/top');
     }
-
-    if (response.data.length === 0) {
-      response = await api.get('/pictures/top');
-    }
-        
     return response;
   }
   catch (error) {

@@ -11,8 +11,8 @@ interface User {
   name: string;
   username: string;
   email: string;
-  following: string[];
-  followed_by: string[];
+  following: {id: string}[];
+  followed_by: {id: string}[];
   picture: {
     id: string;
     picture_url: string;
@@ -74,8 +74,10 @@ export default function Profile() {
 
   const handleFollow = async () => {
     try {
-      setRender(true);
+      console.log(loggedUser!.following);
       await toggleFollow(user!.id);
+      console.log(loggedUser!.following.includes({id: user!.id}));
+      setRender(true);
     } catch (error) {
       console.error('Error following user:', error);
     }
@@ -95,7 +97,7 @@ export default function Profile() {
                   <h3>{user.name.substring(0, 40)}</h3>
                   <h3>@{user.username.substring(0, 40)}</h3>
                   {(loggedUser) && loggedUser.id !== user.id && (
-                    <Button buttonText={(loggedUser.following.includes(user.id)) ? 'Unfollow' : 'Follow'} onClick={() => handleFollow()} />
+                    <Button buttonText={(loggedUser.following.some((user) => user.id === user.id)) ? 'Unfollow' : 'Follow'} onClick={() => handleFollow()} />
                   )}
                 </div>
                 <div className="profile-numbers">

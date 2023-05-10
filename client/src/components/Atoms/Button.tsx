@@ -15,7 +15,10 @@ const buttonStyle = {
   border: '1px solid #C8C9CF',
   '&:hover': {
     border: '1px solid #7a7a7a',
-  }
+  },
+  '&:focus': {
+    outline: 'none',
+  },
 };
 
 export function Button({ loading, buttonText, onClick} : ButtonProps) {
