@@ -52,7 +52,7 @@ export default function Home() {
 
         <div className="home-photos">
           {posts.map((post, index) => (
-            <Post key={index} post={post} setRender={setRender} />
+            <Post key={index} post={post} render={render} setRender={setRender} />
           ))}
         </div>
       </div>

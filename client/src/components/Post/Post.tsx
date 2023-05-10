@@ -27,10 +27,11 @@ interface PostProps {
     tags: string[];
     likes: {id: string}[];
   },
+  render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Post({post, setRender}: PostProps) {
+export default function Post({post, render, setRender}: PostProps) {
   const [firstRender, setFirstRender] = useState(true);
   const [loggedUser, setLoggedUser] = useState<User | null>(null);
   const [renderFollowers, setRenderFollowers] = useState(false);
@@ -47,7 +48,7 @@ export default function Post({post, setRender}: PostProps) {
     };
     
     getLoggedUserData();
-  }, [renderFollowers]);
+  }, [renderFollowers, render]);
 
   async function handleLike() {
     try {
